@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.0.3 Update:2017.02.13"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.0.4 Update:2017.02.13"
 #property strict
 
 //--- Includes ---//
@@ -111,6 +111,53 @@ bool VsVOrderSend(int type, double lots, double price, int slippage,
 			
 			if(err==ERR_INVALID_PRICE) break;
 			if(err==ERR_INVALID_STOPS) break;
+		}
+		Sleep( 100 );
+	}
+	return(false);
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//| VsVOrderClose Function : (Ver.0.0.4)                             |
+//+------------------------------------------------------------------+
+double VsVOrderClose(int slippage, int magic)
+{
+	int ticket=0;
+	int type=OrderType();
+
+	for(int i=0; i<OrdersTotal(); i++)
+	{
+		if(OrderSelect(i,SELECT_BY_POS)==false) break;
+		if(OrderSymbol()!=Symbol() || OrderMagicNumber()!=magic) continue;
+
+		if(type==OP_BUY || type==OP_SELL)
+		{
+			ticket=OrderTicket();
+			break;
+		}
+	}
+	if(ticket==0) return(false);
+
+	double starttime =GetTickCount();
+	while(true)
+	{
+		if(GetTickCount()-starttime>VsVOrderWaitingTime*1000)
+		{
+			Alert("OrderClose Timeout. Check the Experts Logs!!");
+			return(false);
+		}
+
+		if(IsTradeAllowed()==true)
+		{
+			RefreshRates();
+			if(OrderClose(ticket, OrderLots(), OrderClosePrice(), slippage, ArrowColor[type])==true) return(true);
+			int err=GetLastError();
+			Print( "[OrderCloseError] : ", err, " ", ErrorDescription(err) );
+
+			if(err==ERR_INVALID_PRICE) break;
 		}
 		Sleep( 100 );
 	}

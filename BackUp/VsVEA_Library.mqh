@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MGH.VsVEA.Library - Ver.0.0.3 Update:2017.02.13"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.0.4 Update:2017.02.13"
 #property strict
 
 //--- Includes ---//
@@ -39,6 +39,12 @@ double VsVCurrentOrders(int type, int magic);
 //+------------------------------------------------------------------+
 bool VsVOrderSend(int type, double lots, double price, int slippage,
 				  double sl, double tp, string comment, int magic);
+
+
+//+------------------------------------------------------------------+
+//| VsVOrderClose Function : (Ver.0.0.4)                             |
+//+------------------------------------------------------------------+
+double VsVOrderClose(int slippage, int magic);
 
 
 #import
