@@ -1,5 +1,5 @@
 //+------------------------------------------------------------------+
-//|                       VerysVeryInc.MetaTrader4.MovingAverege.mq4 |
+//|                               VerysVeryInc.MetaTrader4.VsVEA.mq4 |
 //|                  Copyright(c) 2016, VerysVery Inc. & Yoshio.Mr24 |
 //|                                         https://github.com/Mr24/ |
 //|                                                 Since:2016.09.24 |
@@ -17,9 +17,9 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.0.3 Update:2017.02.12"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.0.5 Update:2017.02.13"
 
-
+//--- Define Value ---//
 #define MAGICEA 20170213
 
 //--- Initial Value ---//
@@ -29,6 +29,7 @@ double ActiveLots=0.00;
 
 //--- Inputs ---//
 input double DecreaseFactor=3;
+input int Slippage=3;
 
 
 //+------------------------------------------------------------------+
@@ -99,6 +100,28 @@ double LotsOptimized()
 //--- Return Lot Size ---//
 	if(lot<0.01) lot=0.01;
 	return(lot);
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//| Check for open order conditions (Ver.0.0.4)                      |
+//+------------------------------------------------------------------+
+void CheckForOpen()
+{
+
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//| Check for close order conditions (Ver.0.0.5)                     |
+//+------------------------------------------------------------------+
+void CheckForClose()
+{
+
 }
 
 //***//
