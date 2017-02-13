@@ -9,12 +9,16 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MGH.VsVEA.Library - Ver.0.0.1 Update:2017.02.13"
+#property description "VsV.MGH.VsVEA.Library - Ver.0.0.2 Update:2017.02.13"
 #property strict
 
 //--- Includes ---//
-#include <stderror.mgh>
-#include <stdlib.mgh>
+#include <stderror.mqh>
+#include <stdlib.mqh>
+
+
+//--- Define Value (Ver.0.0.2) ---//
+#define VSV_OPENPOS		6
 
 
 //--- Imports ---//
