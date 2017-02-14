@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.8 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.9 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -31,7 +31,7 @@ double ActiveLots=0.00;
 //--- Inputs ---//
 // input double DecreaseFactor=3; // (Ver.0.0.1)
 input int Slippage=3;
-input int RSIPeriod=14;
+// input int RSIPeriod=14;	// (Ver.0.0.1)
 
 
 //+------------------------------------------------------------------+
@@ -110,8 +110,9 @@ double LotsOptimized()
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for open order (Ver.0.1.5)                         |
+//|  Entry Signal for open order (Ver.0.1.5) -> (Ver.0.1.9)          |
 //+------------------------------------------------------------------+
+/*
 int EntrySignal(int magic)
 {
 //--- Open Position Check ---//
@@ -133,7 +134,7 @@ int EntrySignal(int magic)
 
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
