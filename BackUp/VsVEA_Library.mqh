@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.0.7 Update:2017.02.14"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.0.8 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -20,8 +20,9 @@
 //--- Define Value (Ver.0.0.2) ---//
 #define VSV_OPENPOS		6
 
-//--- Extern (Ver.0.0.3) ---//
-extern int VsVOrderWaitingTime=10; 
+//--- Extern (Ver.0.0.8) ---//
+extern int VsVOrderWaitingTime=10;	// (Ver.0.0.3)
+extern double DecreaseFactor=3;
 
 
 //--- Imports ---//
@@ -62,6 +63,11 @@ bool VsVOrderModify(double sl, double tp, int magic);
 //+------------------------------------------------------------------+
 int CalculateCurrentOrders(string Symbol, int magic);
 
+
+//+------------------------------------------------------------------+
+//| Calculate optimal lot size (Ver.0.0.8)                           |
+//+------------------------------------------------------------------+
+double LotsOptimized();
 
 
 

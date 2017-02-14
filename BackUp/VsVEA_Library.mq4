@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.0.7 Update:2017.02.14"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.0.8 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -255,5 +255,50 @@ int CalculateCurrentOrders(string Symbol, int magic) export
 
 }
 //***//
+
+
+//+------------------------------------------------------------------+
+//| Calculate optimal lot size (Ver.0.0.8)                           |
+//+------------------------------------------------------------------+
+double LotsOptimized() export
+{
+	double 	lot;
+	int 	orders=OrdersHistoryTotal(); // History Orders Total
+	int 	losses=0;	// Number of Losses Orders without a break
+
+//--- Select Lot Size ---//
+	// lot=NormalizeDouble( AccountFreeMargin()/1000.0, 2 );
+	// lot=NormalizeDouble( MathFloor(AccountFreeMargin()/10.0)/100.0, 2 ); // 0.14
+	lot=NormalizeDouble( MathFloor(AccountFreeMargin()/100.0)/10.0, 2 ); // 0.10
+	// (Test) lot=NormalizeDouble( lot-MathFloor((lot*100.0)*2/DecreaseFactor)/100.0, 2 ); // 0.04
+
+//--- Calculate Number of Losses Orders without a break ---//
+	if(DecreaseFactor>0)
+	{
+		for(int i=orders-1;i>=0;i--)
+		{
+			if(OrderSelect( i, SELECT_BY_POS, MODE_HISTORY)==false)
+			{
+				Print( "Error in History!!" );
+				break;
+			}
+			if(OrderSymbol()!=Symbol() || OrderType()>OP_SELL)
+				continue;
+
+			//--- OrderProfit() : Order's Net Profit ---//
+			if(OrderProfit()>0) break;
+			if(OrderProfit()<0) losses++;
+		}
+
+		//--- 2 Times Loss : Lot = Lot * (2/3 or 3/3) ---// 
+		if(losses>1)
+			lot=NormalizeDouble( lot-MathFloor((lot*100.0)*losses/DecreaseFactor)/100.0, 2 ); // 0.04
+	}
+
+//--- Return Lot Size ---//
+	if(lot<0.01) lot=0.01;
+	return(lot);
+}
+
 
 //+------------------------------------------------------------------+
