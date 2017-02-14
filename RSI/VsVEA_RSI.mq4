@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.7 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.8 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -29,7 +29,7 @@ double ActiveLots=0.00;
 
 
 //--- Inputs ---//
-input double DecreaseFactor=3;
+// input double DecreaseFactor=3; // (Ver.0.0.1)
 input int Slippage=3;
 input int RSIPeriod=14;
 
@@ -63,8 +63,9 @@ int CalculateCurrentOrders(string Symbol)
 
 
 //+------------------------------------------------------------------+
-//| Calculate optimal lot size (Ver.0.0.3)                           |
+//| Calculate optimal lot size (Ver.0.0.3) -> (Ver.0.1.8)            |
 //+------------------------------------------------------------------+
+/*
 double LotsOptimized()
 {
 	double 	lot;
@@ -105,7 +106,7 @@ double LotsOptimized()
 	return(lot);
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
