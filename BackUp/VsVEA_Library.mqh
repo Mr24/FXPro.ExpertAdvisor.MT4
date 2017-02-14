@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.0.8 Update:2017.02.14"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.1.0 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -20,10 +20,10 @@
 //--- Define Value (Ver.0.0.2) ---//
 #define VSV_OPENPOS		6
 
-//--- Extern (Ver.0.0.8) ---//
+//--- Extern (Ver.0.1.0) ---//
 extern int VsVOrderWaitingTime=10;	// (Ver.0.0.3)
-extern double DecreaseFactor=3;
-
+extern double DecreaseFactor=3;		// (Ver.0.0.8)
+extern int RSIPeriod=14;
 
 //--- Imports ---//
 #import "VsVEA_Library.ex4"
@@ -69,6 +69,11 @@ int CalculateCurrentOrders(string Symbol, int magic);
 //+------------------------------------------------------------------+
 double LotsOptimized();
 
+
+//+------------------------------------------------------------------+
+//|  Entry Signal for Open Order (Ver.0.1.0)                         |
+//+------------------------------------------------------------------+
+int EntrySignal(int magic);
 
 
 #import
