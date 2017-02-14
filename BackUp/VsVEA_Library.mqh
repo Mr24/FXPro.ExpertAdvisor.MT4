@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.0.6 Update:2017.02.14"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.0.7 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -28,6 +28,7 @@ extern int VsVOrderWaitingTime=10;
 #import "VsVEA_Library.ex4"
 
 
+//*** VsV.Order ***//
 //+------------------------------------------------------------------+
 //| VsVCurrentOrders Function : +Buy,-Sell (Ver.0.0.1)               |
 //+------------------------------------------------------------------+
@@ -51,6 +52,17 @@ double VsVOrderClose(int slippage, int magic);
 //| VsVOrderModify Function : Open Position Only (Ver.0.0.6)         |
 //+------------------------------------------------------------------+
 bool VsVOrderModify(double sl, double tp, int magic);
+
+//*** VsV.Order End ***//
+
+
+//*** VsV.Calculate ***//
+//+------------------------------------------------------------------+
+//| Calculate open positions (Ver.0.0.7)                             |
+//+------------------------------------------------------------------+
+int CalculateCurrentOrders(string Symbol, int magic);
+
+
 
 
 #import

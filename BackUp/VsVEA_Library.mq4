@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.0.6 Update:2017.02.14"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.0.7 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -19,6 +19,7 @@
 color ArrowColor[6]={Blue, Red, Blue, Red, Blue, Red};
 
 
+//*** VsV.Order ***//
 //+------------------------------------------------------------------+
 //| VsVCurrentOrders Function : +Buy,-Sell (Ver.0.0.5)               |
 //+------------------------------------------------------------------+
@@ -223,5 +224,36 @@ bool VsVOrderModify(double sl, double tp, int magic) export
 	return(false);
 }
 
+//***//
+
+//*** Order End ***//
+
+
+//*** VsV.Calculate ***//
+//+------------------------------------------------------------------+
+//| Calculate open positions (Ver.0.0.7)                             |
+//+------------------------------------------------------------------+
+int CalculateCurrentOrders(string Symbol, int magic) export
+{
+	int buys=0, sells=0;
+
+//--- Current Orders ---//
+	for(int i=0; i<OrdersTotal(); i++)
+	{
+		if(OrderSelect( i, SELECT_BY_POS, MODE_TRADES)==false) break;
+
+		if(OrderSymbol()==Symbol() && OrderMagicNumber()==magic)
+		{
+			if(OrderType()==OP_BUY) buys++;
+			if(OrderType()==OP_SELL) sells++;
+		}
+	}
+
+//--- Return Orders Volume ---//
+	if(buys>0) return(buys);
+	else return(-sells);
+
+}
+//***//
 
 //+------------------------------------------------------------------+

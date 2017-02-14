@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.6 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.7 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -35,8 +35,9 @@ input int RSIPeriod=14;
 
 
 //+------------------------------------------------------------------+
-//| Calculate open positions (Ver.0.0.3)                             |
+//| Calculate open positions (Ver.0.0.3) -> (Ver.0.1.7)              |
 //+------------------------------------------------------------------+
+/*
 int CalculateCurrentOrders(string Symbol)
 {
 	int buys=0, sells=0;
@@ -58,7 +59,7 @@ int CalculateCurrentOrders(string Symbol)
 	else return(-sells);
 
 }
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
@@ -185,12 +186,13 @@ void CheckForClose()
 
 
 //+------------------------------------------------------------------+
-//| Calculate optimal lot size (Ver.0.1.5)                           |
+//| Calculate optimal lot size (Ver.0.1.5) -> (Ver.0.1.7)            |
 //+------------------------------------------------------------------+
 void OnTick()
 {
 //--- Calculate Open Orders by Current Symbol ---//
-	if(CalculateCurrentOrders(Symbol())==0) CheckForOpen();
+	// if(CalculateCurrentOrders(Symbol())==0) CheckForOpen(); // (Ver.0.0.3)
+	if(CalculateCurrentOrders(Symbol(), MAGICEA)==0) CheckForOpen();
 	else									CheckForOpen();
 	// else									CheckForClose();
 
