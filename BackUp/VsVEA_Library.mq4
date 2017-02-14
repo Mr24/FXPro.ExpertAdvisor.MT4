@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.1.1 Update:2017.02.14"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.1.2 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -304,7 +304,7 @@ double LotsOptimized() export
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for Open Order (Ver.0.1.0)                         |
+//|  Entry Signal for Open Order (Ver.0.1.0) -> (Ver.0.1.2)          |
 //+------------------------------------------------------------------+
 int EntrySignal(int magic) export
 {
@@ -312,15 +312,29 @@ int EntrySignal(int magic) export
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
 
 //--- RSI ---//
-	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);
+	//--- RSI.Live ---//
+	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0); // (Ver.0.1.10)
+	
+	//--- RSI.1Before ---//
+	double rsib=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 1);
 
 //--- Buy or Sell Signal ---/
 	int ret=0;
 	
 	//--- Buy ---//
-	if(pos<=0 && rsil<30) ret=1;
+	// if(pos<=0 && rsil<30) ret=1; // (Ver.0.1.10)
+	if(pos<=0)
+	{
+		if(rsib<50 && rsil>50) ret=1;	
+	}
+	
 	//--- Sell ---//
-	if(pos>=0 && rsil<70) ret=-1;
+	// if(pos>=0 && rsil>70) ret=-1; // (Ver.0.1.10)
+	if(pos>=0)
+	{
+		if(rsib>50 && rsil<50) ret=-1;	
+	}
+	
 
 //--- Return Ret Valuee ---//
 	return(ret);
