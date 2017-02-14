@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.10 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.11 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -33,7 +33,7 @@ input int Slippage=3;
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for open order (Ver.0.1.9) -> (Ver.0.1.10)         |
+//|  Entry Signal for open order (Ver.0.1.10) -> (Ver.0.1.11)        |
 //+------------------------------------------------------------------+
 int EntrySignal(int magic)
 {
@@ -41,18 +41,61 @@ int EntrySignal(int magic)
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
 
 //--- RSI ---//
-	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);
+	//--- RSI.Live ---//
+	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0); // (Ver.0.1.10)
+	
+	//--- RSI.1Before ---//
+	double rsib=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 1);
 
 //--- Buy or Sell Signal ---/
 	int ret=0;
 	
 	//--- Buy ---//
-	if(pos<=0 && rsil<30) ret=1;
+	// if(pos<=0 && rsil<30) ret=1; // (Ver.0.1.10)
+	if(pos<=0)
+	{
+		if(rsib<50 && rsil>50) ret=1;	
+	}
+	
 	//--- Sell ---//
-	if(pos>=0 && rsil>70) ret=-1;
+	// if(pos>=0 && rsil>70) ret=-1; // (Ver.0.1.10)
+	if(pos>=0)
+	{
+		if(rsib>50 && rsil<50) ret=-1;	
+	}
+	
 
 //--- Return Ret Valuee ---//
 	return(ret);
+
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  Exit Signal for open order (Ver.0.1.11)                        |
+//+------------------------------------------------------------------+
+int ExitSignal(int magic)
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- RSI ---//
+	//--- RSI.Live ---//
+	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);
+
+//--- Buy or Sell Exit Signal ---/
+	int ret_exit=0;
+
+	//--- Buy ---//
+	if(pos<=0 && rsil<40) ret_exit=1;
+
+	//--- Sell ---//
+	if(pos>=0 && rsil>60) ret_exit=-1;
+
+//--- Return Ret Valuee ---//
+	return(ret_exit);
 
 }
 
@@ -64,7 +107,7 @@ int EntrySignal(int magic)
 //+------------------------------------------------------------------+
 void CheckForOpen()
 {
-//--- EntrySignal ---//
+//--- Entry Signal ---//
 	int sig_entry=EntrySignal(MAGICEA);
 
 
@@ -86,21 +129,24 @@ void CheckForOpen()
 
 
 //+------------------------------------------------------------------+
-//| Check for close order conditions (Ver.0.1.5)                     |
+//| Check for close order conditions (Ver.0.1.5) -> (Ver.0.1.11)     |
 //+------------------------------------------------------------------+
 void CheckForClose()
 {
-	//--- EntrySignal ---//
-	int sig_entry=EntrySignal(MAGICEA);
+	//--- Exit Signal ---//
+	// int sig_entry=EntrySignal(MAGICEA); // (Ver.0.1.5)
+	int sig_exit=ExitSignal(MAGICEA);
 
 
-//--- Buy Entry ---//
-	if(sig_entry>0)
+//--- Buy Exit ---//
+	// if(sig_entry>0) // (Ver.0.1.5)
+	if(sig_exit>0)
 	{
 		VsVOrderClose(Slippage, MAGICEA);
 	}
-//--- Sell Entry ---//
-	if(sig_entry<0)
+//--- Sell Exit ---//
+	// if(sig_entry<0) // (Ver.0.1.5)
+	if(sig_exit<0)
 	{
 		VsVOrderClose(Slippage, MAGICEA);
 	}
