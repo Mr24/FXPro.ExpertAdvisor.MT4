@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.1.0 Update:2017.02.14"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.1.1 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -300,6 +300,8 @@ double LotsOptimized() export
 	return(lot);
 }
 
+//***//
+
 
 //+------------------------------------------------------------------+
 //|  Entry Signal for Open Order (Ver.0.1.0)                         |
@@ -325,5 +327,33 @@ int EntrySignal(int magic) export
 
 }
 
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  Exit Signal for Open Order (Ver.0.1.1)                          |
+//+------------------------------------------------------------------+
+int ExitSignal(int magic) export
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- RSI ---//
+	//--- RSI.Live ---//
+	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);
+
+//--- Buy or Sell Exit Signal ---/
+	int ret_exit=0;
+
+	//--- Buy ---//
+	if(pos<=0 && rsil<40) ret_exit=1;
+
+	//--- Sell ---//
+	if(pos>=0 && rsil>60) ret_exit=-1;
+
+//--- Return Ret Valuee ---//
+	return(ret_exit);
+
+}
 
 //+------------------------------------------------------------------+
