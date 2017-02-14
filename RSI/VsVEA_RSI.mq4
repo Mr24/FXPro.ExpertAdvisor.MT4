@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.9 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.10 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -29,94 +29,16 @@ double ActiveLots=0.00;
 
 
 //--- Inputs ---//
-// input double DecreaseFactor=3; // (Ver.0.0.1)
 input int Slippage=3;
-// input int RSIPeriod=14;	// (Ver.0.0.1)
 
 
 //+------------------------------------------------------------------+
-//| Calculate open positions (Ver.0.0.3) -> (Ver.0.1.7)              |
+//|  Entry Signal for open order (Ver.0.1.9) -> (Ver.0.1.10)         |
 //+------------------------------------------------------------------+
-/*
-int CalculateCurrentOrders(string Symbol)
-{
-	int buys=0, sells=0;
-
-//--- Current Orders ---//
-	for(int i=0; i<OrdersTotal(); i++)
-	{
-		if(OrderSelect( i, SELECT_BY_POS, MODE_TRADES)==false) break;
-
-		if(OrderSymbol()==Symbol() && OrderMagicNumber()==MAGICEA)
-		{
-			if(OrderType()==OP_BUY) buys++;
-			if(OrderType()==OP_SELL) sells++;
-		}
-	}
-
-//--- Return Orders Volume ---//
-	if(buys>0) return(buys);
-	else return(-sells);
-
-}
-//***/
-
-
-//+------------------------------------------------------------------+
-//| Calculate optimal lot size (Ver.0.0.3) -> (Ver.0.1.8)            |
-//+------------------------------------------------------------------+
-/*
-double LotsOptimized()
-{
-	double 	lot;
-	int 	orders=OrdersHistoryTotal(); // History Orders Total
-	int 	losses=0;	// Number of Losses Orders without a break
-
-//--- Select Lot Size ---//
-	// lot=NormalizeDouble( AccountFreeMargin()/1000.0, 2 );
-	// lot=NormalizeDouble( MathFloor(AccountFreeMargin()/10.0)/100.0, 2 ); // 0.14
-	lot=NormalizeDouble( MathFloor(AccountFreeMargin()/100.0)/10.0, 2 ); // 0.10
-	// (Test) lot=NormalizeDouble( lot-MathFloor((lot*100.0)*2/DecreaseFactor)/100.0, 2 ); // 0.04
-
-//--- Calculate Number of Losses Orders without a break ---//
-	if(DecreaseFactor>0)
-	{
-		for(int i=orders-1;i>=0;i--)
-		{
-			if(OrderSelect( i, SELECT_BY_POS, MODE_HISTORY)==false)
-			{
-				Print( "Error in History!!" );
-				break;
-			}
-			if(OrderSymbol()!=Symbol() || OrderType()>OP_SELL)
-				continue;
-
-			//--- OrderProfit() : Order's Net Profit ---//
-			if(OrderProfit()>0) break;
-			if(OrderProfit()<0) losses++;
-		}
-
-		//--- 2 Times Loss : Lot = Lot * (2/3 or 3/3) ---// 
-		if(losses>1)
-			lot=NormalizeDouble( lot-MathFloor((lot*100.0)*losses/DecreaseFactor)/100.0, 2 ); // 0.04
-	}
-
-//--- Return Lot Size ---//
-	if(lot<0.01) lot=0.01;
-	return(lot);
-}
-
-//***/
-
-
-//+------------------------------------------------------------------+
-//|  Entry Signal for open order (Ver.0.1.5) -> (Ver.0.1.9)          |
-//+------------------------------------------------------------------+
-/*
 int EntrySignal(int magic)
 {
 //--- Open Position Check ---//
-	double pos=VsVCurrentOrders(VSV_OPENPOS, MAGICEA);
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
 
 //--- RSI ---//
 	double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);
@@ -127,18 +49,18 @@ int EntrySignal(int magic)
 	//--- Buy ---//
 	if(pos<=0 && rsil<30) ret=1;
 	//--- Sell ---//
-	if(pos>=0 && rsil<70) ret=-1;
+	if(pos>=0 && rsil>70) ret=-1;
 
 //--- Return Ret Valuee ---//
 	return(ret);
 
 }
 
-//***/
+//***//
 
 
 //+------------------------------------------------------------------+
-//| Check for open order conditions (Ver.0.1.5)                      |
+//| Check for open order conditions (Ver.0.1.5) -> (Ver.0.1.10)      |
 //+------------------------------------------------------------------+
 void CheckForOpen()
 {
@@ -149,13 +71,13 @@ void CheckForOpen()
 //--- Buy Entry ---//
 	if(sig_entry>0)
 	{
-		VsVOrderClose(Slippage, MAGICEA);
+		// VsVOrderClose(Slippage, MAGICEA); // (ver.0.1.5)
 		VsVOrderSend(OP_BUY, LotsOptimized(), Ask, Slippage, 0, 0, COMMENT, MAGICEA);
 	}
 //--- Sell Entry ---//
 	if(sig_entry<0)
 	{
-		VsVOrderClose(Slippage, MAGICEA);
+		// VsVOrderClose(Slippage, MAGICEA); // (Ver.0.1.5)
 		VsVOrderSend(OP_SELL, LotsOptimized(), Bid, Slippage, 0, 0, COMMENT, MAGICEA);
 	}
 }
@@ -188,15 +110,15 @@ void CheckForClose()
 
 
 //+------------------------------------------------------------------+
-//| Calculate optimal lot size (Ver.0.1.5) -> (Ver.0.1.7)            |
+//| Calculate optimal lot size (Ver.0.1.7) -> (Ver.0.1.10)           |
 //+------------------------------------------------------------------+
 void OnTick()
 {
 //--- Calculate Open Orders by Current Symbol ---//
-	// if(CalculateCurrentOrders(Symbol())==0) CheckForOpen(); // (Ver.0.0.3)
+	// if(CalculateCurrentOrders(Symbol())==0) CheckForOpen();	// (Ver.0.0.3)
 	if(CalculateCurrentOrders(Symbol(), MAGICEA)==0) CheckForOpen();
-	else									CheckForOpen();
-	// else									CheckForClose();
+	// else									CheckForOpen();		// (Ver.0.1.7)
+	else									CheckForClose();
 
 }
 
