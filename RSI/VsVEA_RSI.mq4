@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.5 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.6 Update:2017.02.14"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>

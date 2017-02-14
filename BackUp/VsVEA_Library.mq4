@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.0.5 Update:2017.02.14"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.0.6 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -68,7 +68,8 @@ double VsVCurrentOrders(int type, int magic) export
 
 			//--- Default ---//
 			default:
-				Print( "[CurrentOrdersError] : Illegel Order Type("+ IntegerToString(type) +")" );
+				Print( "[CurrentOrdersError] : Illegel Order Type("
+					+ IntegerToString(type) +")" );
 			break;
 		}
 
@@ -105,9 +106,10 @@ bool VsVOrderSend(int type, double lots, double price, int slippage,
 		if(IsTradeAllowed()==true)
 		{
 			RefreshRates();
-			if(OrderSend(Symbol(), type, lots, price, slippage, sl, tp, comment, magic, 0, ArrowColor[type])!=-1) return(true);
+			if(OrderSend(Symbol(), type, lots, price, slippage, sl, tp,
+				comment, magic, 0, ArrowColor[type])!=-1) return(true);
 			int err=GetLastError();
-			Print( "[OrderSendError] : ", err, " ", ErrorDescription(err) );
+			Print("[OrderSendError] : ", err, " ", ErrorDescription(err));
 			
 			if(err==ERR_INVALID_PRICE) break;
 			if(err==ERR_INVALID_STOPS) break;
@@ -153,7 +155,8 @@ double VsVOrderClose(int slippage, int magic) export
 		if(IsTradeAllowed()==true)
 		{
 			RefreshRates();
-			if(OrderClose(ticket, OrderLots(), OrderClosePrice(), slippage, ArrowColor[type])==true) return(true);
+			if(OrderClose(ticket, OrderLots(),
+				OrderClosePrice(), slippage, ArrowColor[type])==true) return(true);
 			int err=GetLastError();
 			Print( "[OrderCloseError] : ", err, " ", ErrorDescription(err) );
 
@@ -163,5 +166,62 @@ double VsVOrderClose(int slippage, int magic) export
 	}
 	return(false);
 }
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//| VsVOrderModify Function : Open Position Only (Ver.0.0.6)         |
+//+------------------------------------------------------------------+
+bool VsVOrderModify(double sl, double tp, int magic) export
+{
+	int ticket=0;
+	int type=OrderType();
+
+	for(int i=0; i<OrdersTotal(); i++)
+	{
+		if(OrderSelect(i, SELECT_BY_POS)==false) break;
+		if(OrderSymbol()!=Symbol() || OrderMagicNumber()!=magic) continue;
+
+		if(type==OP_BUY || type==OP_SELL)
+		{
+			ticket=OrderTicket();
+			break;
+		}
+	}
+	if(ticket==0) return(false);
+
+	sl=NormalizeDouble(sl, Digits);
+	tp=NormalizeDouble(tp, Digits);
+
+	if(sl==0) sl=OrderStopLoss();
+	if(tp==0) tp=OrderTakeProfit();
+
+	if(OrderStopLoss()==sl && OrderTakeProfit()==tp) return(false);
+
+	double starttime=GetTickCount();
+	while(true)
+	{
+		if(GetTickCount()-starttime>VsVOrderWaitingTime*1000)
+		{
+			Alert("OrderModify Timeout. Check the Experts Logs!!");
+			return(false);
+		}
+
+		if(IsTradeAllowed()==true)
+		{
+			if(OrderModify(ticket, 0, sl, tp, 0,
+							ArrowColor[type])==true) return(true);
+			int err=GetLastError();
+			Print( "[OrderModifyError] : ", err, " ", ErrorDescription(err) );
+
+			if(err==ERR_NO_RESULT) break;
+			if(err==ERR_INVALID_STOPS) break;
+		}
+		Sleep( 100 );
+	}
+	return(false);
+}
+
 
 //+------------------------------------------------------------------+
