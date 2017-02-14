@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.0.4 Update:2017.02.13"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.0.5 Update:2017.02.14"
 #property strict
 
 //--- Includes ---//
@@ -20,9 +20,9 @@ color ArrowColor[6]={Blue, Red, Blue, Red, Blue, Red};
 
 
 //+------------------------------------------------------------------+
-//| VsVCurrentOrders Function : +Buy,-Sell (Ver.0.0.1)               |
+//| VsVCurrentOrders Function : +Buy,-Sell (Ver.0.0.5)               |
 //+------------------------------------------------------------------+
-double VsVCurrentOrders(int type, int magic)
+double VsVCurrentOrders(int type, int magic) export
 {
 	double lots=0.0;
 
@@ -83,10 +83,10 @@ double VsVCurrentOrders(int type, int magic)
 
 
 //+------------------------------------------------------------------+
-//| VsVOrderSend Function : (Ver.0.0.3)                              |
+//| VsVOrderSend Function : (Ver.0.0.5)                              |
 //+------------------------------------------------------------------+
 bool VsVOrderSend(int type, double lots, double price, int slippage,
-				  double sl, double tp, string comment, int magic)
+				  double sl, double tp, string comment, int magic) export
 {
 	price=NormalizeDouble(price, Digits);
 	sl=NormalizeDouble(sl,Digits);
@@ -121,9 +121,9 @@ bool VsVOrderSend(int type, double lots, double price, int slippage,
 
 
 //+------------------------------------------------------------------+
-//| VsVOrderClose Function : (Ver.0.0.4)                             |
+//| VsVOrderClose Function : (Ver.0.0.5)                             |
 //+------------------------------------------------------------------+
-double VsVOrderClose(int slippage, int magic)
+double VsVOrderClose(int slippage, int magic) export
 {
 	int ticket=0;
 	int type=OrderType();
