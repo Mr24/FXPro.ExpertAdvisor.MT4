@@ -13,7 +13,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.2.14 Update:2017.02.15"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.2.15 Update:2017.02.15"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
@@ -29,16 +29,17 @@ double AcitvePrice=0.00;
 double ActiveLots=0.00;
 
 
-//--- Inputs (Ver.0.2.14) ---//
+//--- Inputs (Ver.0.2.15) ---//
 // input int Slippage=3; // (Ver.0.1.5)
-input int KPeriod=5;
-input int DPeriod=3;
-input int Slowing=3;
+// input int KPeriod=5;	 // (Ver.0.2.14)
+// input int DPeriod=3;	 // (Ver.0.2.14)
+// input int Slowing=3;	 // (Ver.0.2.14)
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for open order (Ver.0.1.13) -> (Ver.0.2.14)        |
+//|  Entry Signal for Open Order (Ver.0.2.14) -> (Ver.0.2.15)        |
 //+------------------------------------------------------------------+
+/*
 int Sto_EntrySignal(int magic)
 {
 //--- Open Position Check ---//
@@ -88,12 +89,13 @@ int Sto_EntrySignal(int magic)
 
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
-//|  Exit Signal for open order (Ver.0.2.13) -> (Ver.0.2.14)         |
+//|  Exit Signal for Open Order (Ver.0.2.14) -> (Ver.0.2.15)         |
 //+------------------------------------------------------------------+
+/*
 int Sto_ExitSignal(int magic)
 {
 //--- Open Position Check ---//
@@ -138,7 +140,7 @@ int Sto_ExitSignal(int magic)
 
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
