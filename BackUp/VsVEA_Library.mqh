@@ -9,27 +9,31 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.1.1 Update:2017.02.14"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.2.0 Update:2017.02.15"
 #property strict
 
-//--- Includes ---//
+//--- Includes (Ver.0.2.0) ---//
 #include <stderror.mqh>
 #include <stdlib.mqh>
+#include <VsVEA_Signal.mqh>
 
 
 //--- Define Value (Ver.0.0.2) ---//
 #define VSV_OPENPOS		6
 
 //--- Extern (Ver.0.1.1) ---//
-extern int VsVOrderWaitingTime=10;	// (Ver.0.0.3)
-extern double DecreaseFactor=3;		// (Ver.0.0.8)
-extern int RSIPeriod=14;			// (Ver.0.1.0)
+// (Ver.0.0.3)
+extern int VsVOrderWaitingTime=10;
+// (Ver.0.0.8)
+extern double DecreaseFactor=3;
+// (Ver.0.1.0)
+// extern int RSIPeriod=14;
+// (Ver.0.1.11)
 extern int Slippage=3;
 
 
-//--- Imports ---//
+//--- Imports (Ver.0.0.1) ---//
 #import "VsVEA_Library.ex4"
-
 
 //*** VsV.Order ***//
 //+------------------------------------------------------------------+
@@ -71,19 +75,27 @@ int CalculateCurrentOrders(string Symbol, int magic);
 //+------------------------------------------------------------------+
 double LotsOptimized();
 
+#import
 
+//*** VsV.Calculate End ***//
+
+
+//--- Imports (Ver.0.2.0) ---//
+// #import "VsVEA_Signal.ex4"
+
+//*** VsV.Signal End ***//
 //+------------------------------------------------------------------+
 //|  Entry Signal for Open Order (Ver.0.1.0)                         |
 //+------------------------------------------------------------------+
-int EntrySignal(int magic);
+// int EntrySignal(int magic);
 
 
 //+------------------------------------------------------------------+
 //|  Exit Signal for Open Order (Ver.0.1.1)                          |
 //+------------------------------------------------------------------+
-int ExitSignal(int magic);
+// int ExitSignal(int magic);
 
 
-#import
+// #import
 
 //+------------------------------------------------------------------+
