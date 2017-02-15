@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.2.2 Update:2017.02.15"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.2.3 Update:2017.02.15"
 #property strict
 
 //--- Includes ---//
@@ -82,5 +82,92 @@ int RSI_ExitSignal(int magic) export
 	return(ret_exit);
 
 }
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  Sto Entry Signal for Open Order (Ver.0.2.2) -> (Ver.0.2.3)      |
+//+------------------------------------------------------------------+
+int Sto_EntrySignal(int magic) export
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- Stochastic ---//
+	//--- Sto.Main.Live ---//
+	double stoMainL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 0);
+	//--- Sto.Main.1Before ---//
+	double stoMainB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 1);
+	
+	//--- Sto.Signal.Live ---//
+	double stoSigL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 0);
+	//--- Sto.Signal.1Before ---//
+	double stoSigB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 1);
+
+
+//--- Buy or Sell Exit Signal ---/
+	int ret_exit=0;
+
+	//--- Buy ---//
+	if(pos<=0)
+	{
+		if(stoMainL<50 && stoMainB<=stoSigB && stoMainL>stoSigL) ret_exit=1;
+	}
+
+	//--- Sell ---//
+	if(pos>=0)
+	{
+		if(stoMainL>50 && stoMainB>=stoSigB && stoMainL<stoSigL) ret_exit=-1;
+	}
+
+//--- Return Ret Valuee ---//
+	return(ret_exit);
+
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  Sto Exit Signal for Open Order (Ver.0.2.2) -> (Ver.0.2.3)       |
+//+------------------------------------------------------------------+
+int Sto_ExitSignal(int magic) export
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- Stochastic ---//
+	//--- Sto.Main.Live ---//
+	double stoMainL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 0);
+	//--- Sto.Main.1Before ---//
+	double stoMainB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 1);
+	
+	//--- Sto.Signal.Live ---//
+	double stoSigL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 0);
+	//--- Sto.Signal.1Before ---//
+	double stoSigB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 1);
+
+
+//--- Buy or Sell Exit Signal ---/
+	int ret_exit=0;
+
+	//--- Buy ---//
+	if(pos<=0)
+	{
+		if(stoMainL<50 && stoMainB<=stoSigB && stoMainL>stoSigL) ret_exit=1;
+	}
+
+	//--- Sell ---//
+	if(pos>=0)
+	{
+		if(stoMainL>50 && stoMainB>=stoSigB && stoMainL<stoSigL) ret_exit=-1;
+	}
+
+//--- Return Ret Valuee ---//
+	return(ret_exit);
+
+}
+
 
 //+------------------------------------------------------------------+
