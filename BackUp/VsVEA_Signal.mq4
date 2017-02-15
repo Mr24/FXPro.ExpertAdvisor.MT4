@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.2.1 Update:2017.02.15"
+#property description "VsV.MT4.VsVEA.Library - Ver.0.2.2 Update:2017.02.15"
 #property strict
 
 //--- Includes ---//
@@ -17,9 +17,9 @@
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for Open Order (Ver.0.1.0) -> (Ver.0.1.2)          |
+//|  RSI Entry Signal for Open Order (Ver.0.1.2) -> (Ver.0.2.2)      |
 //+------------------------------------------------------------------+
-int EntrySignal(int magic) export
+int RSI_EntrySignal(int magic) export
 {
 //--- Open Position Check ---//
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
@@ -58,9 +58,9 @@ int EntrySignal(int magic) export
 
 
 //+------------------------------------------------------------------+
-//|  Exit Signal for Open Order (Ver.0.1.1)                          |
+//|  RSI Exit Signal for Open Order (Ver.0.1.1) -> (Ver.0.2.2)       |
 //+------------------------------------------------------------------+
-int ExitSignal(int magic) export
+int RSI_ExitSignal(int magic) export
 {
 //--- Open Position Check ---//
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
