@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.2.0 Update:2017.02.15"
+#property description "VsV.MQH.VsVEA.Library - Ver.0.2.1 Update:2017.02.15"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -76,26 +76,5 @@ int CalculateCurrentOrders(string Symbol, int magic);
 double LotsOptimized();
 
 #import
-
-//*** VsV.Calculate End ***//
-
-
-//--- Imports (Ver.0.2.0) ---//
-// #import "VsVEA_Signal.ex4"
-
-//*** VsV.Signal End ***//
-//+------------------------------------------------------------------+
-//|  Entry Signal for Open Order (Ver.0.1.0)                         |
-//+------------------------------------------------------------------+
-// int EntrySignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  Exit Signal for Open Order (Ver.0.1.1)                          |
-//+------------------------------------------------------------------+
-// int ExitSignal(int magic);
-
-
-// #import
 
 //+------------------------------------------------------------------+
