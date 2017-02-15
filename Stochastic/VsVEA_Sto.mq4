@@ -13,13 +13,13 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.2.12 Update:2017.02.15"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.2.13 Update:2017.02.15"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
 
 
-//--- Define Value ---//
+//--- Define Value (Ver.0.2.12) ---//
 #define MAGICEA 20170213
 // #define COMMENT "VsVEA_RSI"	// (Ver.0.1.12)
 #define COMMENT "VsVEA_Sto"
@@ -29,15 +29,14 @@ double AcitvePrice=0.00;
 double ActiveLots=0.00;
 
 
-//--- Inputs ---//
+//--- Inputs (Ver.0.1.12) ---//
 // input int Slippage=3; // (Ver.0.1.5)
 
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for open order (Ver.0.1.11) -> (Ver.0.1.12)        |
+//|  Entry Signal for open order (Ver.0.1.12) -> (Ver.0.2.13)        |
 //+------------------------------------------------------------------+
-/*
-int EntrySignal(int magic)
+int Sto_EntrySignal(int magic)
 {
 //--- Open Position Check ---//
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
@@ -72,14 +71,13 @@ int EntrySignal(int magic)
 
 }
 
-//***/
+//***//
 
 
 //+------------------------------------------------------------------+
-//|  Exit Signal for open order (Ver.0.1.11) -> (Ver.0.1.12)         |
+//|  Exit Signal for open order (Ver.0.1.12) -> (Ver.0.2.13)         |
 //+------------------------------------------------------------------+
-/*
-int ExitSignal(int magic)
+int Sto_ExitSignal(int magic)
 {
 //--- Open Position Check ---//
 	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
@@ -102,16 +100,17 @@ int ExitSignal(int magic)
 
 }
 
-//***/
+//***//
 
 
 //+------------------------------------------------------------------+
-//| Check for open order conditions (Ver.0.1.5) -> (Ver.0.1.10)      |
+//| Check for open order conditions (Ver.0.1.12) -> (Ver.0.2.13)     |
 //+------------------------------------------------------------------+
 void CheckForOpen()
 {
 //--- Entry Signal ---//
-	int sig_entry=EntrySignal(MAGICEA);
+	// int sig_entry=EntrySignal(MAGICEA);	// (Ver.0.1.12)
+	int sig_entry=Sto_EntrySignal(MAGICEA);
 
 
 //--- Buy Entry ---//
@@ -132,13 +131,14 @@ void CheckForOpen()
 
 
 //+------------------------------------------------------------------+
-//| Check for close order conditions (Ver.0.1.5) -> (Ver.0.1.11)     |
+//| Check for close order conditions (Ver.0.1.12) -> (Ver.0.2.13)    |
 //+------------------------------------------------------------------+
 void CheckForClose()
 {
 	//--- Exit Signal ---//
-	// int sig_entry=EntrySignal(MAGICEA); // (Ver.0.1.5)
-	int sig_exit=ExitSignal(MAGICEA);
+	// int sig_entry=EntrySignal(MAGICEA);  // (Ver.0.1.5)
+	// int sig_exit=ExitSignal(MAGICEA);		// (Ver.0.1.12)
+	int sig_exit=Sto_ExitSignal(MAGICEA);
 
 
 //--- Buy Exit ---//
