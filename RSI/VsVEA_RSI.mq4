@@ -13,10 +13,11 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.12 Update:2017.02.14"
+#property description "VsV.MT4.ExpertAdvisor - Ver.0.1.13 Update:2017.02.15"
 
 //--- Includes ---//
 #include <VsVEA_Library.mqh>
+#include <VSVEA_Signal.mqh>
 
 
 //--- Define Value ---//
@@ -105,12 +106,12 @@ int ExitSignal(int magic)
 
 
 //+------------------------------------------------------------------+
-//| Check for open order conditions (Ver.0.1.5) -> (Ver.0.1.10)      |
+//| Check for open order conditions (Ver.0.1.10) -> (Ver.0.1.13)     |
 //+------------------------------------------------------------------+
 void CheckForOpen()
 {
 //--- Entry Signal ---//
-	int sig_entry=EntrySignal(MAGICEA);
+	int sig_entry=RSI_EntrySignal(MAGICEA);
 
 
 //--- Buy Entry ---//
@@ -131,13 +132,13 @@ void CheckForOpen()
 
 
 //+------------------------------------------------------------------+
-//| Check for close order conditions (Ver.0.1.5) -> (Ver.0.1.11)     |
+//| Check for close order conditions (Ver.0.1.11) -> (Ver.0.1.13)    |
 //+------------------------------------------------------------------+
 void CheckForClose()
 {
 	//--- Exit Signal ---//
 	// int sig_entry=EntrySignal(MAGICEA); // (Ver.0.1.5)
-	int sig_exit=ExitSignal(MAGICEA);
+	int sig_exit=RSI_ExitSignal(MAGICEA);
 
 
 //--- Buy Exit ---//
