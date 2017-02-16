@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.Library - Ver.0.2.3 Update:2017.02.15"
+#property description "VsV.MQH.VsVEA.Signal - Ver.0.2.4 Update:2017.02.16"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -26,6 +26,8 @@ extern int RSIPeriod=14;
 extern int KPeriod=5;
 extern int DPeriod=3;
 extern int Slowing=3;
+// VsVEA_HL (Ver.0.2.4)
+extern int HLPeriod=20;
 
 
 //--- Imports (Ver.0.2.0) ---//
@@ -54,6 +56,18 @@ int Sto_EntrySignal(int magic);
 //|  Sto Exit Signal for Open Order (Ver.0.2.2) -> (Ver.0.2.3)       |
 //+------------------------------------------------------------------+
 int Sto_ExitSignal(int magic);
+
+
+//+------------------------------------------------------------------+
+//|  HL_Band Entry Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)  |
+//+------------------------------------------------------------------+
+int HL_EntrySignal(int magic);
+
+
+//+------------------------------------------------------------------+
+//|  HL_Band Exit Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)   |
+//+------------------------------------------------------------------+
+int HL_ExitSignal(int magic);
 
 
 #import

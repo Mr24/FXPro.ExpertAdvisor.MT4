@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.Library - Ver.0.2.3 Update:2017.02.15"
+#property description "VsV.MT4.VsVEA.Signal - Ver.0.2.4 Update:2017.02.16"
 #property strict
 
 //--- Includes ---//
@@ -169,5 +169,79 @@ int Sto_ExitSignal(int magic) export
 
 }
 
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  HL_Band Entry Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)  |
+//+------------------------------------------------------------------+
+int HL_EntrySignal(int magic) export
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- HL Band ---//
+	//--- HL.High & HL.Low --//
+	double HH2=iCustom(NULL, 0, "VsVHL", HLPeriod, 1, 2);
+	double LL2=iCustom(NULL, 0, "VsVHL", HLPeriod, 2, 2);
+
+
+//--- Buy or Sell Signal ---/
+	int ret=0;
+	
+	//--- Buy ---//
+	if(pos<=0)
+	{
+		if(Close[2]<=HH2 && Close[1]>HH2) ret=1;
+	}
+	
+	//--- Sell ---//
+	if(pos>=0)
+	{
+		if(Close[2]>=LL2 && Close[1]<LL2) ret=-1;
+	}
+	
+
+//--- Return Ret Valuee ---//
+	return(ret);
+
+}
+
+//***//
+
+
+//+------------------------------------------------------------------+
+//|  HL_Band Exit Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)   |
+//+------------------------------------------------------------------+
+int HL_ExitSignal(int magic) export
+{
+//--- Open Position Check ---//
+	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+
+//--- HL Band ---//
+	//--- HL.High & HL.Low --//
+	double HH2=iCustom(NULL, 0, "VsVHL", HLPeriod, 1, 2);
+	double LL2=iCustom(NULL, 0, "VsVHL", HLPeriod, 2, 2);
+
+
+//--- Buy or Sell Exit Signal ---/
+	int ret_exit=0;
+
+	//--- Buy ---//
+	if(pos<=0)
+	{	
+		if(Close[2]<=HH2 && Close[1]>HH2) ret_exit=1;
+	}
+
+	//--- Sell ---//
+	if(pos>=0)
+	{
+		if(Close[2]>=LL2 && Close[1]<LL2) ret_exit=-1;
+	}
+
+//--- Return Ret Valuee ---//
+	return(ret_exit);
+
+}
 
 //+------------------------------------------------------------------+
