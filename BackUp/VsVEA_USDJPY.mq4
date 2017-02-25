@@ -7,87 +7,54 @@
 //|                       https://opensource.org/licenses/Apache-2.0 |
 //|                                                            &     |
 //+------------------------------------------------------------------+
+//|                                                ExportLevels2.mq4 |
+//|                      Copyright © 2006, MetaQuotes Software Corp. |
+//|                                        http://www.metaquotes.net |
+//+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor - Ver.0.11.0 Update:2017.02.19"
+#property description "VsV.MT4.ExpertAdvisor.VsVEA_USDJPY - Ver.0.11.2 Update:2017.02.25"
 
 //--- Includes ---//
 #include <VsVEA_UJ_Lib.mqh>
 
 
-//--- Define Value (Ver.0.2.12) ---//
-#define MAGICEA 20170213
-// #define COMMENT "VsVEA_RSI"	// (Ver.0.1.12)
-// #define COMMENT "VsVEA_Sto"	// (Ver.0.2.15)
-#define COMMENT "VsVEA_HL"
-
-//--- Initial Value ---//
-double AcitvePrice=0.00;
-double ActiveLots=0.00;
+//--- Define Value (Ver.0.11.2) ---//
+#define MAGICEA 20170225
+#define COMMENT "VsVEA_USDJPY"
 
 
-//--- Inputs (Ver.0.3.16) ---//
-// input int Slippage=3; // (Ver.0.1.5)
-// input int KPeriod=5;	 // (Ver.0.2.14)
-// input int DPeriod=3;	 // (Ver.0.2.14)
-// input int Slowing=3;	 // (Ver.0.2.14)
-// input int HLPeriod=20; // (Ver.0.3.15)
-
+//--- Initial (Ver.0.11.1) ---//
+extern int SupportTime, ResistanceTime;
+extern double sTime0, sPrice0, SupprotPrice;
+extern double rTime0, rPrice0, ResistancePrice;
 
 //+------------------------------------------------------------------+
-//|  Entry Signal for Open Order (Ver.0.3.16) -> (Ver.0.11.0)        |
+//|  Entry Signal for Open Order (Ver.0.11.2)       				 |
 //+------------------------------------------------------------------+
 int USDJPY_EntrySignal(int magic)
+// double USDJPY_EntrySignal(int magic)
 {
-//--- Open Position Check ---//
-	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
+//--- 1. Base.TrendLine ---//
+	//*--- Support.Time & Price
+	sTime0  = iCustom( NULL, 0, "VsVFX_BL", 5, 0 );
+	sPrice0 = iCustom( NULL, 0, "VsVFX_BL", 4, 0 );
 
-//--- HL Band ---//
+	SupportTime  = (int)sTime0;
+	SupprotPrice = sPrice0;
 
-	//--- RSI.Live ---//
-	// double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0); // (Ver.0.1.10)
-	//--- RSI.1Before ---//
-	// double rsib=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 1); // (Ver.0.1.10)
-	
-	//--- Sto.Main.Live ---//
-	// double stoMainL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 0); // (Ver.0.2.15)
-	//--- Sto.Main.1Before ---//
-	// double stoMainB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 1); // (Ver.0.2.15)
-	
-	//--- Sto.Signal.Live ---//
-	// double stoSigL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 0); // (Ver.0.2.15)
-	//--- Sto.Signal.1Before ---//
-	// double stoSigB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 1); // (Ver.0.2.15)
+	//*--- Resistance.Time & Price
+	rTime0  = iCustom( NULL, 0, "VsVFX_BL", 7, 0 );
+	rPrice0 = iCustom( NULL, 0, "VsVFX_BL", 6, 0 );
 
-	//--- HL.High & HL.Low --//
-	double HH2=iCustom(NULL, 0, "VsVHL", HLPeriod, 1, 2);
-	double LL2=iCustom(NULL, 0, "VsVHL", HLPeriod, 2, 2);
+	ResistanceTime  = (int)rTime0;
+	ResistancePrice = rPrice0;
 
-
-//--- Buy or Sell Signal ---/
-	int ret=0;
-	
-	//--- Buy ---//
-	// if(pos<=0 && rsil<30) ret=1; // (Ver.0.1.10)
-	if(pos<=0)
-	{
-		// if(rsib<50 && rsil>50) ret=1;	// (Ver.0.2.13)
-		// if(stoMainL<50 && stoMainB<=stoSigB && stoMainL>stoSigL) ret=1; // (Ver.0.2.15)
-		if(Close[2]<=HH2 && Close[1]>HH2) ret=1;
-	}
-	
-	//--- Sell ---//
-	// if(pos>=0 && rsil>70) ret=-1; // (Ver.0.1.10)
-	if(pos>=0)
-	{
-		// if(rsib>50 && rsil<50) ret=-1;	// (Ver.0.2.13)
-		// if(stoMainL>50 && stoMainB>=stoSigB && stoMainL<stoSigL) ret=-1; // (Ver.0.2.15)
-		if(Close[2]>=LL2 && Close[1]<LL2) ret=-1;
-	}
-	
-
-//--- Return Ret Valuee ---//
-	return(ret);
+	// (OK) 
+	// return(SupportTime);
+	// return(SupprotPrice);
+	return(ResistanceTime);
+	// return(ResistancePrice);
 
 }
 
@@ -95,85 +62,35 @@ int USDJPY_EntrySignal(int magic)
 
 
 //+------------------------------------------------------------------+
-//|  Exit Signal for Open Order (Ver.0.3.16) -> (Ver.0.11.0)         |
+//|  Exit Signal for Open Order (Ver.0.11.2)                         |
 //+------------------------------------------------------------------+
 int USDJPY_ExitSignal(int magic)
 {
-//--- Open Position Check ---//
-	double pos=VsVCurrentOrders(VSV_OPENPOS, magic);
-
-//--- HL Band ---//
-
-	//--- RSI.Live ---//
-	// double rsil=iRSI(NULL, 0, RSIPeriod, PRICE_CLOSE, 0);	// (Ver.0.2.13)
-
-	//--- Sto.Main.Live ---//
-	// double stoMainL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 0); // (Ver.0.2.15)
-	//--- Sto.Main.1Before ---//
-	// double stoMainB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_MAIN, 1);  // (Ver.0.2.15)
-	
-	//--- Sto.Signal.Live ---//
-	// double stoSigL=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 0); // (Ver.0.2.15)
-	//--- Sto.Signal.1Before ---//
-	// double stoSigB=iStochastic(NULL, 0, KPeriod, DPeriod, Slowing, MODE_SMA, 0, MODE_SIGNAL, 1); // (Ver.0.2.15)
-
-	//--- HL.High & HL.Low --//
-	double HH2=iCustom(NULL, 0, "VsVHL", HLPeriod, 1, 2);
-	double LL2=iCustom(NULL, 0, "VsVHL", HLPeriod, 2, 2);
-
-
-//--- Buy or Sell Exit Signal ---/
-	int ret_exit=0;
-
-	//--- Buy ---//
-	// if(pos<=0 && rsil<40) ret_exit=1;	// (Ver.0.2.13)
-	// if(pos<=0 && stoMainL<50) ret_exit=1;
-	if(pos<=0)
-	{	
-		// if(stoMainL<50 && stoMainB<=stoSigB && stoMainL>stoSigL) ret_exit=1; // (Ver.0.2.15)
-		if(Close[2]<=HH2 && Close[1]>HH2) ret_exit=1;
-	}
-
-	//--- Sell ---//
-	// if(pos>=0 && rsil>60) ret_exit=-1;	// (Ver.0.2.13)
-	// if(pos>=0 && stoMainL>50) ret_exit=-1;
-	if(pos>=0)
-	{
-		// if(stoMainL>50 && stoMainB>=stoSigB && stoMainL<stoSigL) ret_exit=-1; // (Ver.0.2.15)
-		if(Close[2]>=LL2 && Close[1]<LL2) ret_exit=-1;
-	}
-
-//--- Return Ret Valuee ---//
-	return(ret_exit);
-
+	return(0);
 }
 
 //***//
 
 
 //+------------------------------------------------------------------+
-//| Check for open order conditions (Ver.0.3.16) -> (Ver.0.11.0)     |
+//| Check for Open Order Conditions (Ver.0.11.2)                     |
 //+------------------------------------------------------------------+
 void CheckForOpen()
 {
 //--- Entry Signal ---//
-	// int sig_entry=EntrySignal(MAGICEA);		// (Ver.0.1.12)
-	// int sig_entry=Sto_EntrySignal(MAGICEA);	// (Ver.0.2.15)
-	// int sig_entry=HL_EntrySignal(MAGICEA);	// (Ver.0.3.16)
-	int sig_entry=USDJPY_EntrySignal(MAGICEA);
-
+	// int sig_entry = USDJPY_EntrySignal(MAGICEA);
+	double sig_entry = USDJPY_EntrySignal(MAGICEA);
 
 //--- Buy Entry ---//
 	if(sig_entry>0)
 	{
-		// VsVOrderClose(Slippage, MAGICEA); // (ver.0.1.5)
-		VsVOrderSend(OP_BUY, LotsOptimized(), Ask, Slippage, 0, 0, COMMENT, MAGICEA);
+		Print( Time[(int)sig_entry] ); 				  // Check:Time
+		// Print( DoubleToStr( sig_entry, Digits ) ); // Check:Price
 	}
 //--- Sell Entry ---//
 	if(sig_entry<0)
 	{
-		// VsVOrderClose(Slippage, MAGICEA); // (Ver.0.1.5)
-		VsVOrderSend(OP_SELL, LotsOptimized(), Bid, Slippage, 0, 0, COMMENT, MAGICEA);
+		// Print( ... );
 	}
 }
 
@@ -181,46 +98,25 @@ void CheckForOpen()
 
 
 //+------------------------------------------------------------------+
-//| Check for close order conditions (Ver.0.3.16) -> (Ver.0.11.0)    |
+//| Check for Close Order Conditions (Ver.0.11.2)                    |
 //+------------------------------------------------------------------+
 void CheckForClose()
 {
-	//--- Exit Signal ---//
-	// int sig_entry=EntrySignal(MAGICEA);		// (Ver.0.1.5)
-	// int sig_exit=ExitSignal(MAGICEA);		// (Ver.0.1.12)
-	// int sig_exit=Sto_ExitSignal(MAGICEA);	// (Ver.0.2.15)
-	// int sig_exit=HL_ExitSignal(MAGICEA);		// (Ver.0.3.16)
-	int sig_exit=USDJPY_ExitSignal(MAGICEA);
 
-
-//--- Buy Exit ---//
-	// if(sig_entry>0) // (Ver.0.1.5)
-	if(sig_exit>0)
-	{
-		VsVOrderClose(Slippage, MAGICEA);
-	}
-//--- Sell Exit ---//
-	// if(sig_entry<0) // (Ver.0.1.5)
-	if(sig_exit<0)
-	{
-		VsVOrderClose(Slippage, MAGICEA);
-	}
 }
 
 //***//
 
 
 //+------------------------------------------------------------------+
-//| Calculate optimal lot size (Ver.0.1.7) -> (Ver.0.1.10)           |
+//| OnTick Open & Close Order (Ver.0.11.2)                           |
 //+------------------------------------------------------------------+
 void OnTick()
 {
-//--- Calculate Open Orders by Current Symbol ---//
-	// if(CalculateCurrentOrders(Symbol())==0) CheckForOpen();	// (Ver.0.0.3)
-	if(CalculateCurrentOrders(Symbol(), MAGICEA)==0) CheckForOpen();
-	// else									CheckForOpen();		// (Ver.0.1.7)
-	else									CheckForClose();
-
+//--- Calculate Open & Close Orders by Current Symbol ---//
+	CheckForOpen();
+	// if(CalculateCurrentOrders(Symbol(), MAGICEA)==0) CheckForOpen();
+	// else 											 CheckForClose();
 }
 
 //+------------------------------------------------------------------+
