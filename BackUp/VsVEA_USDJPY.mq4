@@ -13,25 +13,31 @@
 //+------------------------------------------------------------------+
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.ExpertAdvisor.VsVEA_USDJPY - Ver.0.11.2 Update:2017.02.25"
+#property description "VsV.MT4.VsVEA_USDJPY - Ver.0.11.3.1 Update:2017.12.24"
+
+//*--- 3-1. EntryPoint & ExitPoint : TL Cross * HL TrendLine
+//*--- 3-2. EntryPoint & Exitpoint : Tick * HL
+//*--- 3-3. EntryPoint & Exitpoint : RSI & Sto & MACD
+//*--- 3-4. EntryPoint & ExitPoint : SAR & BB & MA
 
 //--- Includes ---//
 #include <VsVEA_UJ_Lib.mqh>
 
 
-//--- Define Value (Ver.0.11.2) ---//
-#define MAGICEA 20170225
+//--- Define Value (Ver.0.11.3.1) ---//
+#define MAGICEA 20171224
 #define COMMENT "VsVEA_USDJPY"
 
 
 //--- Initial (Ver.0.11.1) ---//
-extern int SupportTime, ResistanceTime;
-extern double sTime0, sPrice0, SupprotPrice;
-extern double rTime0, rPrice0, ResistancePrice;
+// extern int SupportTime, ResistanceTime;
+// extern double sTime0, sPrice0, SupprotPrice;
+// extern double rTime0, rPrice0, ResistancePrice;
 
 //+------------------------------------------------------------------+
 //|  Entry Signal for Open Order (Ver.0.11.2)       				 |
 //+------------------------------------------------------------------+
+/*
 int USDJPY_EntrySignal(int magic)
 // double USDJPY_EntrySignal(int magic)
 {
@@ -58,18 +64,19 @@ int USDJPY_EntrySignal(int magic)
 
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
 //|  Exit Signal for Open Order (Ver.0.11.2)                         |
 //+------------------------------------------------------------------+
+/*
 int USDJPY_ExitSignal(int magic)
 {
 	return(0);
 }
 
-//***//
+//***/
 
 
 //+------------------------------------------------------------------+
