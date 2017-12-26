@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.1 Update:2017.12.24"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.2 Update:2017.12.26"
 #property strict
 
 //--- Includes ---//
@@ -18,6 +18,19 @@
 extern double pos;
 extern double sTime0, sPrice0;
 extern double rTime0, rPrice0;
+
+//+------------------------------------------------------------------+
+//|  VsVFX_BL Signal (Ver.0.11.3.2)                                  |
+//+------------------------------------------------------------------+
+double VsVFX_BL_Sig(double sTime) export
+{
+//--- 1. Base.TrendLine --//
+	//*--- Support.Time & Price
+	sTime0	= iCustom( NULL, 0, "VsVFX_BL", 5, 0 );
+	// sPrice0	= iCustom( NULL, 0, "VsVFX_BL", 4, 0 );
+
+	return(sTime0);
+}
 
 //+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order (Ver.0.11.3.1)               |
