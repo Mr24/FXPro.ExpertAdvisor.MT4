@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.2 Update:2017.12.26"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.3 Update:2017.12.26"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -35,9 +35,12 @@ extern int HLPeriod=20;
 
 //*** VsV.Signal ***//
 //+------------------------------------------------------------------+
-//|  VsVFX_BL Signal (Ver.0.11.3.2)                                  |
+//|  VsVFX_BL Signal (Ver.0.11.3.2)  -> (Ver.0.11.3.3)               |
 //+------------------------------------------------------------------+
-double VsVFX_BL_Sig(double sTime);
+void VsVFX_BL_Sig(double &sTime, double &sPrice,
+					double &rTime, double &rPrice);
+// (Ver.0.11.3.2) double VsVFX_BL_Sig(double sTime);
+
 
 //+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order (Ver.0.11.3.1)               |

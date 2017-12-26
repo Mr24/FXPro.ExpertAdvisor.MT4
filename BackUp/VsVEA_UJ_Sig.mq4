@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.2 Update:2017.12.26"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.3 Update:2017.12.26"
 #property strict
 
 //--- Includes ---//
@@ -20,16 +20,23 @@ extern double sTime0, sPrice0;
 extern double rTime0, rPrice0;
 
 //+------------------------------------------------------------------+
-//|  VsVFX_BL Signal (Ver.0.11.3.2)                                  |
+//|  VsVFX_BL Signal (Ver.0.11.3.2) -> (Ver.0.11.3.3)                |
 //+------------------------------------------------------------------+
-double VsVFX_BL_Sig(double sTime) export
+void VsVFX_BL_Sig(double &sTime, double &sPrice,
+					double &rTime, double &rPrice) export
+// (Ver.0.11.3.2) double VsVFX_BL_Sig(double sTime) export
 {
 //--- 1. Base.TrendLine --//
 	//*--- Support.Time & Price
-	sTime0	= iCustom( NULL, 0, "VsVFX_BL", 5, 0 );
-	// sPrice0	= iCustom( NULL, 0, "VsVFX_BL", 4, 0 );
+	sTime 	= iCustom( NULL, 0, "VsVFX_BL", 5, 0 );
+	sPrice 	= iCustom( NULL, 0, "VsVFX_BL", 4, 0 );
+	// (Ver.0.11.3.2) sTime0	= iCustom( NULL, 0, "VsVFX_BL", 5, 0 );
+	// (Ver.0.11.3.2) sPrice0	= iCustom( NULL, 0, "VsVFX_BL", 4, 0 );
+	//*--- Resistance.Time & Price
+	rTime	= iCustom( NULL, 0, "VsVFX_BL", 7, 0 );
+	rPrice	= iCustom( NULL, 0, "VsVFX_BL", 6, 0 );
 
-	return(sTime0);
+	// (Ver.0.11.3.2) return(sTime0);
 }
 
 //+------------------------------------------------------------------+
@@ -51,7 +58,6 @@ int USDJPY_EntrySignal(int magic) export
 	int rTime00	= (int)rTime0;
 
 	return(rTime00);
-	
 }
 
 //+------------------------------------------------------------------+
