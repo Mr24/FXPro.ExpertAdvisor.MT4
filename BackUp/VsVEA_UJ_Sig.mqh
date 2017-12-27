@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.3 Update:2017.12.26"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.4 Update:2017.12.26"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -40,6 +40,13 @@ extern int HLPeriod=20;
 void VsVFX_BL_Sig(double &sTime, double &sPrice,
 					double &rTime, double &rPrice);
 // (Ver.0.11.3.2) double VsVFX_BL_Sig(double sTime);
+
+
+//+------------------------------------------------------------------+
+//|  VsVFX_SAR Signal (Ver.0.11.3.4)                                 |
+//+------------------------------------------------------------------+
+int VsVFX_SAR_Sig(double &vSAR000, double &vSAR001,
+				double &vLow001, double &vHigh001);
 
 
 //+------------------------------------------------------------------+
