@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.5 Update:2017.12.27"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.6 Update:2017.12.27"
 #property strict
 
 //--- Includes ---//
@@ -31,6 +31,13 @@ extern double vMACD, vMACD01, vMACD02;
 extern double vMACDSig, vMACDSig01, vMACDSig02;
 extern double mdCheck;    // MACD & Signal.Up&Down.Check
 extern double mdCheckC00; // MACD & Signal & C-0.Up&Down.Check
+
+//--- Stochastic & Sto.Center ---//
+extern double vSto, vSto01;
+extern double vStoSig, vStoSig01;
+extern double stoCheck;   	// Sto & Signal.Up.Down.Check
+extern double stoCheckC50;  // Sto & Singnal & C-50.Up&Down.Check
+extern double stoPos;   	// Sto & Signal & C-50.CurrentPosition
 
 
 //+------------------------------------------------------------------+
@@ -90,6 +97,61 @@ void VsVFX_MACD_Sig(double &mdC, double &mdCC,
 }
 
 //+------------------------------------------------------------------+
+//|  VsVFX_Sto Signal (Ver.0.11.3.6)                                 |
+//+------------------------------------------------------------------+
+void VsVFX_Sto_Sig(double &stoC, double &stoCC, double &stoP,
+		double &vSto0, double &vSto001,
+		double &vStoSig0, double &vStoSig001) export
+{
+//--- 2. TrendLine ---//
+	//*--- 2-3. TrendLine : Stochastic.Up&Down.TrendCheck
+	//*--- Stochastic.Trend.Up ---//
+	if( vSto001 <= vStoSig001 && vSto0 > vStoSig0 ) stoC = 1;
+	//*--- Stochastic.Trend.Down ---//
+	if( vSto001 >= vStoSig001 && vSto0 < vStoSig0 ) stoC = -1;
+
+	//*--- Stochastic.Center.x.Up ---//
+	if( vSto001 < 50 && vSto0 > 50 && vSto0 > vStoSig0 ) stoCC = 1;
+	//*--- Stochastic.Center.x.Down ---//
+	if( vSto001 > 50 && vSto0 < 50 && vSto0 < vStoSig0 ) stoCC = -1;
+
+	//*--- Stochastic.Position ---//
+	//*--- Sto.Center.x ---//
+	if( vSto001 < 50 && vSto001 >= vStoSig001
+		&& vSto0 > 50 && vSto0 > vStoSig0 ) stoP = 1;
+	if( vSto001 > 50 && vSto001 <= vStoSig001
+		&& vSto0 < 50 && vSto0 < vStoSig0 ) stoP = -1;
+
+	//*--- vSto01 > 50 & vSto > 50 ---//
+	//*--- 50.UpUp
+	if( vSto001 > 50 && vSto001 >= vStoSig001
+		&& vSto0 > 50 && vSto0 > vStoSig0 ) stoP = 2;
+	//*--- 50.DownDown
+	if( vSto001 > 50 && vSto001 <= vStoSig001
+		&& vSto0 > 50 && vSto0 < vStoSig0 ) stoP = -2;
+	//*--- 50.xUp
+	if( vSto001 > 50 && vSto001 <= vStoSig001
+		&& vSto0 > 50 && vSto0 > vStoSig0 ) stoP = 3;
+	//*--- 50.xDown
+	if( vSto001 > 50 && vSto001 >= vStoSig001
+		&& vSto0 > 50 && vSto0 < vStoSig0 ) stoP = -3;
+
+	//*--- vSto01 < 50 & vSto < 50 ---//
+	//*--- -50.UpUp
+	if( vSto001 < 50 && vSto001 >= vStoSig001
+		&& vSto0 < 50 && vSto0 > vStoSig0 ) stoP = 4;
+	//*--- -50.DownDown
+	if( vSto001 < 50 && vSto001 <= vStoSig001
+		&& vSto0 < 50 && vSto0 < vStoSig0 ) stoP = -4;
+	//*--- -50.xUp
+	if( vSto001 < 50 && vSto001 <= vStoSig001
+		&& vSto0 < 50 && vSto0 > vStoSig0 ) stoP = 5;
+	//*--- -50.xDown
+	if( vSto001 < 50 && vSto001 >= vStoSig001
+		&& vSto0 < 50 && vSto0 < vStoSig0 ) stoP = -5;
+}
+
+//+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order(Ver.0.11.3.4)->(Ver.0.11.3.5)|
 //+------------------------------------------------------------------+
 int USDJPY_EntrySignal(int magic) export
@@ -136,6 +198,18 @@ int USDJPY_EntrySignal(int magic) export
 	VsVFX_MACD_Sig( mdCheck, mdCheckC00,
                   vMACD, vMACD01, vMACD02,
                   vMACDSig, vMACDSig01, vMACDSig02);
+
+	//*--- 2-3. Stochastic ---//
+	vSto  = iCustom( NULL, 0, "VsVSto", 0, 0 );
+	vSto01  = iCustom( NULL, 0, "VsVSto", 0, 1 );
+
+	vStoSig   = iCustom( NULL, 0, "VsVSto", 1, 0 );
+	vStoSig01 = iCustom( NULL, 0, "VsVSto", 1, 1 );
+
+	//*--- 2-3.1. stoCheck & stoCheckC50 & stoPos ---//
+	VsVFX_Sto_Sig(stoCheck, stoCheckC50, stoPos,
+		vSto, vSto01, vStoSig, vStoSig01);
+
 
 
 //--- 99. Buy or Sell Signal ---//

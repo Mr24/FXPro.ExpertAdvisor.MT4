@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.5 Update:2017.12.27"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.3.6 Update:2017.12.27"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -55,6 +55,14 @@ int VsVFX_SAR_Sig(double &vSAR000, double &vSAR001,
 void VsVFX_MACD_Sig(double &mdC, double &mdCC,
 		double &vMACD0, double &vMACD001, double &vMACD002,
 		double &vMACDSig0, double &vMACDSig001, double &vMACDSig002);
+
+
+//+------------------------------------------------------------------+
+//|  VsVFX_Sto Signal (Ver.0.11.3.6)                                 |
+//+------------------------------------------------------------------+
+void VsVFX_Sto_Sig(double &stoC, double &stoCC, double &stoP,
+		double &vSto0, double &vSto001,
+		double &vStoSig0, double &vStoSig001);
 
 
 //+------------------------------------------------------------------+
