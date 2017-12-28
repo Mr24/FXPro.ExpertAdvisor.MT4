@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.6 Update:2017.12.27"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.7 Update:2017.12.27"
 #property strict
 
 //--- Includes ---//
@@ -38,6 +38,12 @@ extern double vStoSig, vStoSig01;
 extern double stoCheck;   	// Sto & Signal.Up.Down.Check
 extern double stoCheckC50;  // Sto & Singnal & C-50.Up&Down.Check
 extern double stoPos;   	// Sto & Signal & C-50.CurrentPosition
+
+//--- RSI & RSI.Center ---//
+extern double vRSI, vRSI01;
+extern double rsiCheck;   // RSI Up.Down.Check
+extern double rsiCheckC50;  // RSI & C-50.Up&Down.Check
+extern double rsiPos;   // RSI & C-50 & 30.70.Over & 40.60.Range.CurrentPosition
 
 
 //+------------------------------------------------------------------+
@@ -152,6 +158,96 @@ void VsVFX_Sto_Sig(double &stoC, double &stoCC, double &stoP,
 }
 
 //+------------------------------------------------------------------+
+//|  VsVFX_RSI Signal (Ver.0.11.3.7)                                 |
+//+------------------------------------------------------------------+
+void VsVFX_RSI_Sig(double &rsiC, double &rsiCC, double &rsiP,
+		double &vRSI0, double &vRSI001) export
+{
+//--- 2. TrendLine ---//
+	//*--- 2-4. TrendLine : RSI.Up&Down.TrendCheck
+	//*--- RSI.Trend.Up ---//
+	if( vRSI0 > vRSI001 ) rsiC = 1;
+	//*--- RSI.Trend.Down ---//
+	if( vRSI0 < vRSI001 ) rsiC = -1;
+
+	//*--- RSI.Center.x.Up ---//
+	if( vRSI001 < 50 && vRSI0 > 50 && vRSI0 > vRSI001 ) rsiCC = 1;
+	//*--- RSI.Center.x.Down ---//
+	if( vRSI001 > 50 && vRSI0 < 50 && vRSI0 < vRSI001 ) rsiCC = -1;
+
+	//*--- RSI.Position ---//
+	//*--- RSI.Center.x ---//
+	if( vRSI001 < 50 && vRSI0 > 50 && vRSI0 > vRSI001 ) rsiP = 50;
+	if( vRSI001 > 50 && vRSI0 < 50 && vRSI0 < vRSI001 ) rsiP = -50;
+
+	//*--- RSI.Resistance.Range ---//
+	//*--- 56.UpUp : 50 < vRSI01 <= 60 && 50 < vRSI <= 60
+	if( vRSI001 > 50 && vRSI001 <= 60
+		&& vRSI0 > 50 && vRSI0 <= 60 && vRSI0 > vRSI001 ) rsiP = 56;
+	//*--- 67.UpUp : 60 < vRSI01 <= 70 && 60 < vRSI <= 70
+	if( vRSI001 > 60 && vRSI001 <= 70
+		&& vRSI0 > 60 && vRSI0 <= 70 && vRSI0 > vRSI001 ) rsiP = 67;
+	//*--- 77.UpUp : 70 < vRSI01 <= 100 && 70 < vRSI <= 100
+	if( vRSI001 > 70 && vRSI001 <= 100
+		&& vRSI0 > 70 && vRSI0 <= 100 && vRSI0 > vRSI001 ) rsiP = 77;
+	//*--- 60.xUp : 50 < vRSI01 <= 60 && 60 < vRSI <= 70
+	if( vRSI001 > 50 && vRSI001 <= 60
+		&& vRSI0 > 60 && vRSI0 <= 70 && vRSI0 > vRSI001 ) rsiP = 60;
+	//*--- 70.xUp : 60 < vRSI01 <= 70 && 70 < vRSI <= 100
+	if( vRSI001 > 60 && vRSI001 <= 70
+		&& vRSI0 > 70 && vRSI0 <= 100 && vRSI0 > vRSI001 ) rsiP = 70;
+
+	//*--- -56.DownDown : 50 < vRSI01 <= 60 && 50 < vRSI <= 60
+	if( vRSI001 > 50 && vRSI001 <= 60
+		&& vRSI0 > 50 && vRSI0 <= 60 && vRSI0 < vRSI001 ) rsiP = -56;
+	//*--- -67.DownDown : 60 < vRSI01 <= 70 && 60 < vRSI <= 70
+	if( vRSI001 > 60 && vRSI001 <= 70
+		&& vRSI0 > 60 && vRSI0 <= 70 && vRSI0 < vRSI001 ) rsiP = -67;
+	//*--- -77.DownDown : 70 < vRSI01 <= 100 && 70 < vRSI <= 100
+	if( vRSI001 > 70 && vRSI001 <= 100
+		&& vRSI0 > 70 && vRSI0 <= 100 && vRSI0 < vRSI001 ) rsiP = -77;
+	//*--- -60.xDown : 60 < vRSI01 <= 70 && 50 < vRSI <= 60
+	if( vRSI001 > 60 && vRSI001 <= 70
+		&& vRSI0 > 50 && vRSI0 <= 60 && vRSI0 < vRSI001 ) rsiP = -60;
+	//*--- -70.xDown : 70 < vRSI01 <= 100 && 60 < vRSI <= 70
+	if( vRSI001 > 70 && vRSI001 <= 100
+		&& vRSI0 > 60 && vRSI0 <= 70 && vRSI0 < vRSI001 ) rsiP = -70;
+
+	//*--- RSI.Support.Range ---//
+	//*--- 45.UpUp : 40 <= vRSI01 < 50 && 40 <= vRSI < 50
+	if( vRSI001 >= 40 && vRSI001 < 50
+		&& vRSI0 >= 40 && vRSI0 < 50 && vRSI0 > vRSI001 ) rsiP = 45;
+	//*--- 34.UpUp : 30 <= vRSI01 < 40 && 30 <= vRSI < 40
+	if( vRSI001 >= 30 && vRSI001 < 40
+		&& vRSI0 >= 30 && vRSI0 < 40 && vRSI0 > vRSI001 ) rsiP = 34;
+	//*--- 33.UpUp : 0 <= vRSI01 < 30 && 0 <= vRSI < 30
+	if( vRSI001 >= 0 && vRSI001 < 30
+		&& vRSI0 >= 0 && vRSI0 < 30 && vRSI0 > vRSI001 ) rsiP = 33;
+	//*--- 40.xUp : 30 <= vRSI01 < 40 && 40 <= vRSI < 50
+	if( vRSI001 >= 30 && vRSI001 < 40
+		&& vRSI0 >= 40 && vRSI0 < 50 && vRSI0 > vRSI001 ) rsiP = 40;
+	//*--- 30.xUp : 0 <= vRSI01 < 30 && 30 <= vRSI < 40
+	if( vRSI001 >= 0 && vRSI001 < 30
+		&& vRSI0 >= 30 && vRSI0 < 40 && vRSI0 > vRSI001 ) rsiP = 30;
+
+	//*--- -45.DownDown : 40 <= vRSI01 < 50 && 40 <= vRSI < 50
+	if( vRSI001 >= 40 && vRSI001 < 50
+		&& vRSI0 >= 40 && vRSI0 < 50 && vRSI0 < vRSI001 ) rsiP = -45;
+	//*--- -34.DownDown : 30 <= vRSI01 < 40 && 30 <= vRSI < 40
+	if( vRSI001 >= 30 && vRSI001 < 40
+		&& vRSI0 >= 30 && vRSI0 < 40 && vRSI0 < vRSI001 ) rsiP = -34;
+	//*--- -33.DownDown : 0 <= vRSI01 < 30 && 0 <= vRSI < 30
+	if( vRSI001 >= 0 && vRSI001 < 30
+		&& vRSI0 >= 0 && vRSI0 < 30 && vRSI0 < vRSI001 ) rsiP = -33;
+	//*--- -40.xDown : 40 <= vRSI01 < 50 && 30 <= vRSI < 40
+	if( vRSI001 >= 40 && vRSI001 < 50
+		&& vRSI0 >= 30 && vRSI0 < 40 && vRSI0 < vRSI001 ) rsiP = -40;
+	//*--- -30.xDown : 30 <= vRSI01 < 40 && 0 <= vRSI < 30
+	if( vRSI001 >= 30 && vRSI001 < 40
+		&& vRSI0 >= 0 && vRSI0 < 30 && vRSI0 < vRSI001 ) rsiP = -30;
+}
+
+//+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order(Ver.0.11.3.4)->(Ver.0.11.3.5)|
 //+------------------------------------------------------------------+
 int USDJPY_EntrySignal(int magic) export
@@ -210,6 +306,12 @@ int USDJPY_EntrySignal(int magic) export
 	VsVFX_Sto_Sig(stoCheck, stoCheckC50, stoPos,
 		vSto, vSto01, vStoSig, vStoSig01);
 
+	//*--- 2-4. RSI ---//
+	vRSI  = iCustom( NULL, 0, "VsVFX_RSI", 0, 0 );
+	vRSI01  = iCustom( NULL, 0, "VsVFX_RSI", 0, 1 );
+
+	//*--- 2-4.1. rsiCheck & rsiCheckC50 & rsiPos ---//
+	VsVFX_RSI_Sig(rsiCheck, rsiCheckC50, rsiPos, vRSI, vRSI01);
 
 
 //--- 99. Buy or Sell Signal ---//
