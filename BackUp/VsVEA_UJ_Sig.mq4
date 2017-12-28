@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.4.0 Update:2017.12.27"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.4.1 Update:2017.12.27"
 #property strict
 
 //--- Includes ---//
@@ -323,11 +323,11 @@ int USDJPY_EntrySignal(int magic) export
 
 //--- 99. Buy or Sell Signal ---//
 	int ret = 0;
-	// ret = tLots;
 
 	//*--- Buy ---//
-
+	if( tLots==1 && Ask>=HLMid01 && mdCheck==1 && mdCheckC00==1 ) ret = 1;
 	//*--- Sell ---//
+	if( tLots==-1 && Bid<=HLMid01 && mdCheck==-1 && mdCheckC00==-1 ) ret=-1;
 
 
 //--- Return Ret Value ---//
