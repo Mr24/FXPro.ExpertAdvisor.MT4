@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.3.7 Update:2017.12.27"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.4.0 Update:2017.12.27"
 #property strict
 
 //--- Includes ---//
@@ -44,6 +44,9 @@ extern double vRSI, vRSI01;
 extern double rsiCheck;   // RSI Up.Down.Check
 extern double rsiCheckC50;  // RSI & C-50.Up&Down.Check
 extern double rsiPos;   // RSI & C-50 & 30.70.Over & 40.60.Range.CurrentPosition
+
+//--- HL ---//
+extern double HLMid, HLMid01;
 
 
 //+------------------------------------------------------------------+
@@ -312,6 +315,10 @@ int USDJPY_EntrySignal(int magic) export
 
 	//*--- 2-4.1. rsiCheck & rsiCheckC50 & rsiPos ---//
 	VsVFX_RSI_Sig(rsiCheck, rsiCheckC50, rsiPos, vRSI, vRSI01);
+
+	//*--- 2-5. HL ---//
+	HLMid = iCustom( NULL, 0, "VsVHL", 0, 0 );
+	HLMid01 = iCustom( NULL, 0, "VsVHL", 0, 1 );
 
 
 //--- 99. Buy or Sell Signal ---//
