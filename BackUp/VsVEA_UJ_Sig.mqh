@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.4.2 Update:2017.12.27"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.5.0 Update:2017.12.27"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
