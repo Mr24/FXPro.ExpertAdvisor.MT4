@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.5.0 Update:2017.12.27"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.5.1 Update:2017.12.28"
 #property strict
 
 //--- Includes ---//
@@ -48,10 +48,6 @@ extern double rsiPos;   // RSI & C-50 & 30.70.Over & 40.60.Range.CurrentPosition
 
 //--- HL ---//
 extern double HLMid, HLMid01;
-
-//--- TL ---//
-extern double sTime01, sPrice01, sTime02, sPrice02;
-extern double rTime01, rPrice01, rTime02, rPrice02;
 
 
 //+------------------------------------------------------------------+
@@ -322,37 +318,15 @@ int USDJPY_EntrySignal(int magic) export
 	HLMid01 = iCustom( NULL, 0, "VsVHL", 0, 1 );
 
 	//*--- 2-6. TL ---//
-	if(rPrice01>0) rPrice01 = iCustom( NULL, 0, "VsVFX_TL", 1, 0 );
-	Print( "UJ_rPrice=" + DoubleToStr( rPrice01, Digits ) );
-	/*
-	rTime01	= iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
-	rPrice01 = iCustom( NULL, 0, "VsVFX_TL", 1, 0 );
-	sTime01	= iCustom( NULL, 0, "VsVFX_TL", 2, 0 );
-	sPrice01 = iCustom( NULL, 0, "VsVFX_TL", 3, 0 );
-	rTime02	= iCustom( NULL, 0, "VsVFX_TL", 4, 0 );
-	rPrice02 = iCustom( NULL, 0, "VsVFX_TL", 5, 0 );
-	sTime02	= iCustom( NULL, 0, "VsVFX_TL", 6, 0 );
-	sPrice02 = iCustom( NULL, 0, "VsVFX_TL", 7, 0 );
-	*/
 
 //--- 99. Buy or Sell Signal ---//
 	int ret = 0;
 
-	//*--- Start Entry Bars : After 60Min ---//
-	int limit = Bars - IndicatorCounted();
-	if(limit<=1062)
-	{
-		ret=0;
-		Print( "Bars=" + IntegerToString(limit) );
-	}
-	else
-	{
-		//*--- Buy ---//
-		if( tLots==1 && Ask>=HLMid01 && mdCheck==1 && mdCheckC00==1 ) ret = 1;
-		//*--- Sell ---//
-		if( tLots==-1 && Bid<=HLMid01 && mdCheck==-1 && mdCheckC00==-1 ) ret=-1;
-		Print( "Bars=" + IntegerToString(limit) );
-	}
+	//*--- Buy ---//
+	if( tLots==1 && Ask>=HLMid01 && mdCheck==1 && mdCheckC00==1 ) ret = 1;
+	//*--- Sell ---//
+	if( tLots==-1 && Bid<=HLMid01 && mdCheck==-1 && mdCheckC00==-1 ) ret=-1;
+
 
 //--- Return Ret Value ---//
 	return(ret);
