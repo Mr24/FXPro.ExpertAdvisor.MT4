@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.5.1 Update:2017.12.28"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.6.1 Update:2018.01.10"
 #property strict
 
 //--- Includes ---//
@@ -254,6 +254,7 @@ void VsVFX_RSI_Sig(double &rsiC, double &rsiCC, double &rsiP,
 //+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order(Ver.0.11.3.7)->(Ver.0.11.4.1)|
 //+------------------------------------------------------------------+
+/*
 int USDJPY_EntrySignal(int magic) export
 {
 //--- Open Position Check ---//
@@ -267,7 +268,7 @@ int USDJPY_EntrySignal(int magic) export
 	//*--- Resistance.Time & Price
 	rTime0	= iCustom( NULL, 0, "VsVFX_BL", 7, 0 );
 	rPrice0	= iCustom( NULL, 0, "VsVFX_BL", 6, 0 );
-*/
+*
 
 //--- 2. TrendLine ---//
 	//*--- 2-1. SAR ---//
@@ -331,10 +332,12 @@ int USDJPY_EntrySignal(int magic) export
 //--- Return Ret Value ---//
 	return(ret);
 }
+*/
 
 //+------------------------------------------------------------------+
 //|  USDJPY Exit Signal for Open Order(Ver.0.11.3.2)->(Ver.0.11.4.2) |
 //+------------------------------------------------------------------+
+/*
 int USDJPY_ExitSignal(int magic) export
 {
 //--- Open Position Check ---//
@@ -403,5 +406,6 @@ int USDJPY_ExitSignal(int magic) export
 	return(ret_exit);
 
 }
+*/
 
 //+------------------------------------------------------------------+
