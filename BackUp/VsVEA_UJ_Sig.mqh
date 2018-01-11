@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.3 Update:2018.01.11"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.4 Update:2018.01.11"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -61,6 +61,7 @@ void VsVFX_RSI_Sig(double &rsiC, double &rsiCC, double &rsiP,
 		double &vRSI0, double &vRSI001);
 
 
+/*
 //+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order (Ver.0.11.3.1)               |
 //+------------------------------------------------------------------+
@@ -71,6 +72,7 @@ int USDJPY_EntrySignal(int magic);
 //|  USDJPY Entry Signal for Open Order (Ver.0.11.4.2)               |
 //+------------------------------------------------------------------+
 int USDJPY_ExitSignal(int magic);
+*/
 
 
 #import

@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.6.3 Update:2018.01.11"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.6.4 Update:2018.01.11"
 #property strict
 
 //--- Includes ---//
@@ -261,8 +261,9 @@ void VsVFX_RSI_Sig(double &rsiC, double &rsiCC, double &rsiP,
 }
 
 //+------------------------------------------------------------------+
-//|  USDJPY Entry Signal for Open Order(Ver.0.11.6.1)->(Ver.0.11.6.2)|
+//|  USDJPY Entry Signal for Open Order(Ver.0.11.6.3)->(Ver.0.11.6.4)|
 //+------------------------------------------------------------------+
+/*
 int USDJPY_EntrySignal(int magic) export
 {
 //--- Open Position Check ---//
@@ -287,16 +288,18 @@ int USDJPY_EntrySignal(int magic) export
 	if( tLots==1 && Ask>=HLMid01 && mdCheck==1 && mdCheckC00==1 ) ret = 1;
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<=HLMid01 && mdCheck==-1 && mdCheckC00==-1 ) ret=-1;
-	*/
+	*
 
 
 //--- Return Ret Value ---//
 	return(ret);
 }
+*/
 
 //+------------------------------------------------------------------+
-//|  USDJPY Exit Signal for Open Order(Ver.0.11.6.1)->(Ver.0.11.6.2) |
+//|  USDJPY Exit Signal for Open Order(Ver.0.11.6.3)->(Ver.0.11.6.4) |
 //+------------------------------------------------------------------+
+/*
 int USDJPY_ExitSignal(int magic) export
 {
 //--- Open Position Check ---//
@@ -324,11 +327,12 @@ int USDJPY_ExitSignal(int magic) export
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<= HLMid01 && stoPos<0 && rsiPos==-50 )
 		ret_exit = 1;
-	*/
+	*
 
 //--- Return Ret_Exit Value ---//
 	return(ret_exit);
 
 }
+*/
 
 //+------------------------------------------------------------------+
