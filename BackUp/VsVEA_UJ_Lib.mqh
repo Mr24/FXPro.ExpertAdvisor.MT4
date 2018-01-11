@@ -9,13 +9,14 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Library - Ver.0.11.0 Update:2017.02.19"
+#property description "VsV.MQH.VsVEA.USDJPY.Library - Ver.0.11.1 Update:2018.01.11"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
 #include <stderror.mqh>
 #include <stdlib.mqh>
 #include <VsVEA_UJ_Sig.mqh>
+#include <VsVEA_UJ_EnEx.mqh>
 
 
 //--- Define Value (Ver.0.0.2) ---//
