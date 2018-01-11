@@ -19,20 +19,21 @@
 #include <VsVEA_UJ_Lib.mqh>
 
 
-//--- Imports (Ver.0.11.6.1) ---//
+//--- Imports (Ver.0.11.6.0) ---//
 #import "VsVEA_UJ_EnEx.ex4"
+
 
 //*** VsV.Entry.Exit ***//
 //+------------------------------------------------------------------+
-//|  USDJPY Entry Signal for Open Order (Ver.0.11.3.1)               |
+//|  NewTL Entry Signal for Open Order (Ver.0.11.6.1)                |
 //+------------------------------------------------------------------+
-int USDJPY_EntrySignal(int magic);
+int NewTL_EntrySignal(int magic);
 
 
 //+------------------------------------------------------------------+
-//|  USDJPY Entry Signal for Open Order (Ver.0.11.4.2)               |
+//|  NewTL Entry Signal for Open Order (Ver.0.11.6.1)                |
 //+------------------------------------------------------------------+
-int USDJPY_ExitSignal(int magic);
+int NewTL_ExitSignal(int magic);
 
 
 #import
