@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.1 Update:2018.01.10"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.2 Update:2018.01.11"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -20,6 +20,7 @@
 
 
 //--- Extern (Ver.0.2.3) ---//
+/*
 // VsVEA_RSI (Ver.0.1.1)
 extern int RSIPeriod=14;
 // VsVEA_Sto (Ver.0.2.3)
@@ -28,6 +29,7 @@ extern int DPeriod=3;
 extern int Slowing=3;
 // VsVEA_HL (Ver.0.2.4)
 extern int HLPeriod=20;
+*/
 
 
 //--- Imports (Ver.0.2.0) ---//
@@ -72,7 +74,6 @@ void VsVFX_RSI_Sig(double &rsiC, double &rsiCC, double &rsiP,
 		double &vRSI0, double &vRSI001);
 
 
-/*
 //+------------------------------------------------------------------+
 //|  USDJPY Entry Signal for Open Order (Ver.0.11.3.1)               |
 //+------------------------------------------------------------------+
@@ -84,43 +85,6 @@ int USDJPY_EntrySignal(int magic);
 //+------------------------------------------------------------------+
 int USDJPY_ExitSignal(int magic);
 
-
-//+------------------------------------------------------------------+
-//|  RSI Entry Signal for Open Order (Ver.0.1.0) -> (Ver.0.2.2)      |
-//+------------------------------------------------------------------+
-int RSI_EntrySignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  RSI Exit Signal for Open Order (Ver.0.1.1) -> (Ver.0.2.2)       |
-//+------------------------------------------------------------------+
-int RSI_ExitSignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  Sto Entry Signal for Open Order (Ver.0.2.2) -> (Ver.0.2.3)      |
-//+------------------------------------------------------------------+
-int Sto_EntrySignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  Sto Exit Signal for Open Order (Ver.0.2.2) -> (Ver.0.2.3)       |
-//+------------------------------------------------------------------+
-int Sto_ExitSignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  HL_Band Entry Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)  |
-//+------------------------------------------------------------------+
-int HL_EntrySignal(int magic);
-
-
-//+------------------------------------------------------------------+
-//|  HL_Band Exit Signal for Open Order (Ver.0.2.3) -> (Ver.0.2.4)   |
-//+------------------------------------------------------------------+
-int HL_ExitSignal(int magic);
-
-*/
 
 #import
 
