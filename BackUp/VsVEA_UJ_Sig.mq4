@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.6.2 Update:2018.01.11"
+#property description "VsV.MT4.VsVEA.USDJPY.Sig - Ver.0.11.6.3 Update:2018.01.11"
 #property strict
 
 //--- Includes ---//
@@ -270,6 +270,9 @@ int USDJPY_EntrySignal(int magic) export
 
 //--- 2. TrendLine ---//
 	//*--- 2-6. TL ---//
+	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
+	Print( "NewTL.En:" + DoubleToStr( NewTL, Digits ) );
+
 
 //--- 99. Buy or Sell Signal ---//
 	int ret = 0;
@@ -301,6 +304,8 @@ int USDJPY_ExitSignal(int magic) export
 
 //--- 2. TrendLine ---//
 	//*--- 2-6. TL ---//
+	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
+	Print( "NewTL.Ex:" + DoubleToStr( NewTL, Digits ) );
 
 //--- 99. Buy or Sell Signal ---//
 	int ret_exit = 0;

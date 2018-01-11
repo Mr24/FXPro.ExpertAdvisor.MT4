@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.2 Update:2018.01.11"
+#property description "VsV.MQH.VsVEA.USDJPY.Sig - Ver.0.11.6.3 Update:2018.01.11"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -17,19 +17,6 @@
 #include <stdlib.mqh>
 // (Ver.0.2.0)
 #include <VsVEA_UJ_Lib.mqh>
-
-
-//--- Extern (Ver.0.2.3) ---//
-/*
-// VsVEA_RSI (Ver.0.1.1)
-extern int RSIPeriod=14;
-// VsVEA_Sto (Ver.0.2.3)
-extern int KPeriod=5;
-extern int DPeriod=3;
-extern int Slowing=3;
-// VsVEA_HL (Ver.0.2.4)
-extern int HLPeriod=20;
-*/
 
 
 //--- Imports (Ver.0.2.0) ---//
