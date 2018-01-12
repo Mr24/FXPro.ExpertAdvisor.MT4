@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.2 Update:2018.01.11"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.3 Update:2018.01.13"
 #property strict
 
 //--- Includes ---//
@@ -51,6 +51,10 @@ extern double HLMid, HLMid01;
 
 //--- TL ---//
 extern double NewTL;
+
+//--- Entry & Exit Story ---//
+extern double EnSt;
+extern double ExSt;
 
 
 //+------------------------------------------------------------------+
@@ -223,14 +227,25 @@ int USDJPY_EntrySignal(int magic) export
 	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
 	Print( "NewTL.En:" + DoubleToStr( NewTL, Digits ) );
 
+	//*--- 2-7. Entry.Story ---//
+	EnSt = iCustom( NULL, 0, "VsVFX_TL", 1, 0 );
+	Print( "EnSt." + DoubleToStr( EnSt, 0 )	);
+
 
 //--- 99. Buy or Sell Signal ---//
 	int ret = 0;
 
 	//*--- Buy ---//
+	if(EnSt>0) ret = (int)EnSt;
+	//*--- Sell ---//
+	if(EnSt<0) ret = (int)EnSt;
+
+	/* (Ver.0.11.6.2.OK)
+	//*--- Buy ---//
 	if(pos<=0) ret = NewTL_EntrySignal(magic);
 	//*--- Sell ---//
 	if(pos>=0) ret = NewTL_EntrySignal(magic);
+	*/
 
 	/* (Ver.0.11.6.1.OK)
 	//*--- Buy ---//
@@ -257,14 +272,25 @@ int USDJPY_ExitSignal(int magic) export
 	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
 	Print( "NewTL.Ex:" + DoubleToStr( NewTL, Digits ) );
 
+	//*--- 2-7. Entry.Story ---//
+	ExSt = iCustom( NULL, 0, "VsVFX_TL", 2, 0 );
+	Print( "ExSt." + DoubleToStr( ExSt, 0 )	);
+
 //--- 99. Buy or Sell Signal ---//
 	int ret_exit = 0;
 
+	//*--- Buy ---//
+	if(ExSt<0) ret_exit = (int)ExSt;
+	//*--- Sell ---//
+	if(ExSt>0) ret_exit = (int)ExSt;
+
+	/* (Ver.0.11.6.2.OK)
 	//*--- Buy ---//
 	if(pos<=0) ret_exit = NewTL_ExitSignal(magic);
 
 	//*--- Sell ---//
 	if(pos>=0) ret_exit = NewTL_ExitSignal(magic);
+	*/
 
 	/* (Ver.0.11.6.1.OK)
 	//*--- Buy ---//
