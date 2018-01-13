@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.3 Update:2018.01.13"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.4 Update:2018.01.13"
 #property strict
 
 //--- Includes ---//
@@ -236,9 +236,18 @@ int USDJPY_EntrySignal(int magic) export
 	int ret = 0;
 
 	//*--- Buy ---//
+	if(EnSt>0)
+		if(pos<=0) ret = (int)EnSt;
+	//*--- Sell ---//
+	if(EnSt<0)
+		if(pos>=0) ret = (int)EnSt;
+
+	/* (Ver.0.11.6.3.OK)
+	//*--- Buy ---//
 	if(EnSt>0) ret = (int)EnSt;
 	//*--- Sell ---//
 	if(EnSt<0) ret = (int)EnSt;
+	*/
 
 	/* (Ver.0.11.6.2.OK)
 	//*--- Buy ---//
@@ -280,9 +289,18 @@ int USDJPY_ExitSignal(int magic) export
 	int ret_exit = 0;
 
 	//*--- Buy ---//
+	if(ExSt<0)
+		if(pos<=0) ret_exit = (int)ExSt;
+	//*--- Sell ---//
+	if(ExSt>0)
+		if(pos>=0) ret_exit = (int)ExSt;
+
+	/* (Ver.0.11.6.3.OK)
+	//*--- Buy ---//
 	if(ExSt<0) ret_exit = (int)ExSt;
 	//*--- Sell ---//
 	if(ExSt>0) ret_exit = (int)ExSt;
+	*/
 
 	/* (Ver.0.11.6.2.OK)
 	//*--- Buy ---//
