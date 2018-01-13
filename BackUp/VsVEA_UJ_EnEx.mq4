@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.4 Update:2018.01.13"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.5 Update:2018.01.13"
 #property strict
 
 //--- Includes ---//
@@ -126,7 +126,7 @@ int NewTL_EntrySignal(int magic) export
 	//*--- 2-6. TL ---//
 	/* (0.11.6.0.OK)
 	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
-	(Print( "NewTL:" + DoubleToStr( NewTL, Digits ) );
+	Print( "NewTL:" + DoubleToStr( NewTL, Digits ) );
 	*/
 
 //--- 99. Buy or Sell Signal ---//
@@ -143,9 +143,10 @@ int NewTL_EntrySignal(int magic) export
 }
 
 //+------------------------------------------------------------------+
-//|  NewTL Exit Signal for Open Order(Ver.0.11.6.1)                  |
+//|  NewTL Exit Signal for Open Order (Ver.0.11.6.1)->(Ver.0.11.6.5) |
 //+------------------------------------------------------------------+
-int NewTL_ExitSignal(int magic) export
+int NewTL_ExitSignal(double NewTL00, int magic) export
+// (Ver.0.11.6.4.OK) int NewTL_ExitSignal(int magic) export
 {
 //--- Open Position Check ---//
 	// (0.11.6.0.OK) pos = VsVCurrentOrders(VSV_OPENPOS, magic);
@@ -198,6 +199,9 @@ int NewTL_ExitSignal(int magic) export
 	HLMid = iCustom( NULL, 0, "VsVHL", 0, 0 );
 	HLMid01 = iCustom( NULL, 0, "VsVHL", 0, 1 );
 
+	//*--- 2-6. TL ---//
+	Print( "NewTL00:" + DoubleToStr( NewTL00, Digits ) );
+
 //--- 99. Buy or Sell Signal ---//
 	int ret_exit = 0;
 
@@ -224,8 +228,10 @@ int USDJPY_EntrySignal(int magic) export
 
 //--- 2. TrendLine ---//
 	//*--- 2-6. TL ---//
+	/* (Ver.0.11.6.4.OK)
 	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
 	Print( "NewTL.En:" + DoubleToStr( NewTL, Digits ) );
+	*/
 
 	//*--- 2-7. Entry.Story ---//
 	EnSt = iCustom( NULL, 0, "VsVFX_TL", 1, 0 );
@@ -278,8 +284,10 @@ int USDJPY_ExitSignal(int magic) export
 
 //--- 2. TrendLine ---//
 	//*--- 2-6. TL ---//
+	/* (Ver.0.11.6.4.OK)
 	NewTL = iCustom( NULL, 0, "VsVFX_TL", 0, 0 );
 	Print( "NewTL.Ex:" + DoubleToStr( NewTL, Digits ) );
+	*/
 
 	//*--- 2-7. Entry.Story ---//
 	ExSt = iCustom( NULL, 0, "VsVFX_TL", 2, 0 );

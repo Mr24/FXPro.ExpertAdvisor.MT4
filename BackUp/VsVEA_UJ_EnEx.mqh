@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MQH.VsVEA.USDJPY.EnEx - Ver.0.11.6.4 Update:2018.01.13"
+#property description "VsV.MQH.VsVEA.USDJPY.EnEx - Ver.0.11.6.5 Update:2018.01.13"
 #property strict
 
 //--- Includes (Ver.0.2.0) ---//
@@ -31,9 +31,10 @@ int NewTL_EntrySignal(int magic);
 
 
 //+------------------------------------------------------------------+
-//|  NewTL Entry Signal for Open Order (Ver.0.11.6.1)                |
+//|  NewTL Exit Signal for Open Order (Ver.0.11.6.1)->(Ver.0.11.6.5) |
 //+------------------------------------------------------------------+
-int NewTL_ExitSignal(int magic);
+int NewTL_ExitSignal(double NewTL00, int magic);
+// (Ver.0.11.6.4.OK) int NewTL_ExitSignal(int magic);
 
 
 //+------------------------------------------------------------------+
