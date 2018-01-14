@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.6.5 Update:2018.01.13"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.7.1 Update:2018.01.14"
 #property strict
 
 //--- Includes ---//
@@ -133,9 +133,24 @@ int NewTL_EntrySignal(int magic) export
 	int ret = 0;
 
 	//*--- Buy ---//
+	if( tLots==1 && Ask>=HLMid01
+		&& mdCheck==1 // && mdCheckC00==1
+		&& rsiPos>=50
+		&& stoPos>0
+	) ret = 1;
+	//*--- Sell ---//
+	if( tLots==-1 && Bid<=HLMid01
+		&& mdCheck==-1 // && mdCheckC00==-1
+		&& rsiPos<=50
+		&& stoPos<0
+	) ret=-1;
+
+	/* (Ver.0.11.6.5.OK)
+	//*--- Buy ---//
 	if( tLots==1 && Ask>=HLMid01 && mdCheck==1 && mdCheckC00==1 ) ret = 1;
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<=HLMid01 && mdCheck==-1 && mdCheckC00==-1 ) ret=-1;
+	*/
 
 
 //--- Return Ret Value ---//
@@ -206,12 +221,28 @@ int NewTL_ExitSignal(double NewTL00, int magic) export
 	int ret_exit = 0;
 
 	//*--- Buy ---//
+	if( tLots==1 && Ask>= HLMid01
+		&& mdCheck==1
+		&& rsiPos==50
+		&& stoPos>0
+	)
+		ret_exit = -1;
+	//*--- Sell ---//
+	if( tLots==-1 && Bid<= HLMid01
+		&& mdCheck==-1
+		&& rsiPos==-50
+		&& stoPos<0
+	)
+		ret_exit = 1;
+
+	/* (Ver.0.11.6.5.OK)
+	//*--- Buy ---//
 	if( tLots==1 && Ask>= HLMid01 && stoPos>0 && rsiPos==50 )
 		ret_exit = -1;
-
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<= HLMid01 && stoPos<0 && rsiPos==-50 )
 		ret_exit = 1;
+	*/
 
 //--- Return Ret_Exit Value ---//
 	return(ret_exit);
