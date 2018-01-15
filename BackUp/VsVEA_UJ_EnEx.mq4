@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.7.1 Update:2018.01.14"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.7.2 Update:2018.01.14"
 #property strict
 
 //--- Includes ---//
@@ -135,15 +135,25 @@ int NewTL_EntrySignal(int magic) export
 	//*--- Buy ---//
 	if( tLots==1 && Ask>=HLMid01
 		&& mdCheck==1 // && mdCheckC00==1
-		&& rsiPos>=50
-		&& stoPos>0
-	) ret = 1;
+		// (0.11.7.1.OK) && rsiPos>=50
+		// (0.11.7.1.OK) && stoPos>0
+	)
+	{
+		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret = 1;
+		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret = 1;
+	}
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<=HLMid01
 		&& mdCheck==-1 // && mdCheckC00==-1
-		&& rsiPos<=50
-		&& stoPos<0
-	) ret=-1;
+		// (0.11.7.1.OK) && rsiPos<=50
+		// (0.11.7.1.OK) && stoPos<0
+	)
+	{
+		if( rsiPos<=0 && stoCheck<0
+			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret=-1;
+		if( stoPos<0 && stoPos!=-2 && stoPos!=-3
+			&& rsiPos<=0 && stoCheck<0 ) ret=-1;
+	}
 
 	/* (Ver.0.11.6.5.OK)
 	//*--- Buy ---//
@@ -223,17 +233,26 @@ int NewTL_ExitSignal(double NewTL00, int magic) export
 	//*--- Buy ---//
 	if( tLots==1 && Ask>= HLMid01
 		&& mdCheck==1
-		&& rsiPos==50
-		&& stoPos>0
+		// (0.11.7.1.OK) && rsiPos==50
+		// (0.11.7.1.OK) && stoPos>0
 	)
-		ret_exit = -1;
+	{
+		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret_exit = -1;
+		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret_exit = -1;
+
+	}
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<= HLMid01
 		&& mdCheck==-1
-		&& rsiPos==-50
-		&& stoPos<0
+		// (0.11.7.1.OK) && rsiPos==-50
+		// (0.11.7.1.OK) && stoPos<0
 	)
-		ret_exit = 1;
+	{
+		if( rsiPos<=0 && stoCheck<0
+			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret_exit = 1;
+		if( stoPos<0 && stoPos!=-2 && stoPos!=-3
+			&& rsiPos<=0 && stoCheck<0 ) ret_exit = 1;
+	}
 
 	/* (Ver.0.11.6.5.OK)
 	//*--- Buy ---//
