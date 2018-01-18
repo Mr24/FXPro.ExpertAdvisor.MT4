@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.7.2 Update:2018.01.14"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.8.1 Update:2018.01.18"
 #property strict
 
 //--- Includes ---//
@@ -51,6 +51,12 @@ extern double HLMid, HLMid01;
 
 //--- TL ---//
 extern double NewTL;
+
+//--- CCI.Woody ---//
+extern double TrendCCI, TrendCCI01;
+extern double EntryCCI, EntryCCI01;
+extern double cTimeBar;
+extern bool Zero_Cross;
 
 //--- Entry & Exit Story ---//
 extern double EnSt;
@@ -129,30 +135,43 @@ int NewTL_EntrySignal(int magic) export
 	Print( "NewTL:" + DoubleToStr( NewTL, Digits ) );
 	*/
 
+	//*--- 2-7. CCI.Woody ---//
+	TrendCCI = iCustom( NULL, 0, "VsVFX_CCI", 4, 0 );
+	TrendCCI01 = iCustom( NULL, 0, "VsVFX_CCI", 4, 1 );
+	EntryCCI = iCustom( NULL, 0, "VsVFX_CCI", 5, 0 );
+	EntryCCI01 = iCustom( NULL, 0, "VsVFX_CCI", 5, 1 );
+	cTimeBar = iCustom( NULL, 0, "VsVFX_CCI", 3, 0 );
+
 //--- 99. Buy or Sell Signal ---//
 	int ret = 0;
 
 	//*--- Buy ---//
 	if( tLots==1 && Ask>=HLMid01
-		&& mdCheck==1 // && mdCheckC00==1
+		// (0.11.7.2.OK) && mdCheck==1 // (0.11.7.1.OK) && mdCheckC00==1
 		// (0.11.7.1.OK) && rsiPos>=50
 		// (0.11.7.1.OK) && stoPos>0
 	)
 	{
+		if( EntryCCI01<0 && EntryCCI>=0 ) ret=1;
+		/* (Ver.0.11.7.2.OK)
 		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret = 1;
 		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret = 1;
+		*/
 	}
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<=HLMid01
-		&& mdCheck==-1 // && mdCheckC00==-1
+		// (0.11.7.2.OK) && mdCheck==-1 // (0.11.7.1.OK) && mdCheckC00==-1
 		// (0.11.7.1.OK) && rsiPos<=50
 		// (0.11.7.1.OK) && stoPos<0
 	)
 	{
+		if( EntryCCI01>0 && EntryCCI<=0) ret=-1;
+		/* (Ver.0.11.7.1.OK)
 		if( rsiPos<=0 && stoCheck<0
 			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret=-1;
 		if( stoPos<0 && stoPos!=-2 && stoPos!=-3
 			&& rsiPos<=0 && stoCheck<0 ) ret=-1;
+		*/
 	}
 
 	/* (Ver.0.11.6.5.OK)
@@ -227,31 +246,43 @@ int NewTL_ExitSignal(double NewTL00, int magic) export
 	//*--- 2-6. TL ---//
 	Print( "NewTL00:" + DoubleToStr( NewTL00, Digits ) );
 
+	//*--- 2-7. CCI.Woody ---//
+	TrendCCI = iCustom( NULL, 0, "VsVFX_CCI", 4, 0 );
+	TrendCCI01 = iCustom( NULL, 0, "VsVFX_CCI", 4, 1 );
+	EntryCCI = iCustom( NULL, 0, "VsVFX_CCI", 5, 0 );
+	EntryCCI01 = iCustom( NULL, 0, "VsVFX_CCI", 5, 1 );
+	cTimeBar = iCustom( NULL, 0, "VsVFX_CCI", 3, 0 );
+
 //--- 99. Buy or Sell Signal ---//
 	int ret_exit = 0;
 
 	//*--- Buy ---//
 	if( tLots==1 && Ask>= HLMid01
-		&& mdCheck==1
+		// (0.11.7.2.OK) && mdCheck==1
 		// (0.11.7.1.OK) && rsiPos==50
 		// (0.11.7.1.OK) && stoPos>0
 	)
 	{
+		if( EntryCCI>=0 && TrendCCI>=0 && cTimeBar>=0 ) ret_exit=-1;
+		/* (Ver.0.11.7.2.OK)
 		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret_exit = -1;
 		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret_exit = -1;
-
+		*/
 	}
 	//*--- Sell ---//
 	if( tLots==-1 && Bid<= HLMid01
-		&& mdCheck==-1
+		// (0.11.7.2.OK) & mdCheck==-1
 		// (0.11.7.1.OK) && rsiPos==-50
 		// (0.11.7.1.OK) && stoPos<0
 	)
 	{
+		if( EntryCCI<=0 && TrendCCI<=0 && cTimeBar<=0 ) ret_exit=1;
+		/* (Ver.0.11.7.2.OK)
 		if( rsiPos<=0 && stoCheck<0
 			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret_exit = 1;
 		if( stoPos<0 && stoPos!=-2 && stoPos!=-3
 			&& rsiPos<=0 && stoCheck<0 ) ret_exit = 1;
+		*/
 	}
 
 	/* (Ver.0.11.6.5.OK)
