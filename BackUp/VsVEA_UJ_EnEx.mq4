@@ -9,7 +9,7 @@
 #property library
 #property copyright "Copyright(c) 2016 -, VerysVery Inc. && Yoshio.Mr24"
 #property link      "https://github.com/VerysVery/"
-#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.8.1 Update:2018.01.18"
+#property description "VsV.MT4.VsVEA.USDJPY.EnEx - Ver.0.11.8.2 Update:2018.01.18"
 #property strict
 
 //--- Includes ---//
@@ -152,7 +152,8 @@ int NewTL_EntrySignal(int magic) export
 		// (0.11.7.1.OK) && stoPos>0
 	)
 	{
-		if( EntryCCI01<0 && EntryCCI>=0 ) ret=1;
+		if( TrendCCI>=0 && EntryCCI01<=0 && EntryCCI>=0 ) ret=1;
+		// (0.11.8.1.OK) if( EntryCCI01<0 && EntryCCI>=0 ) ret=1;
 		/* (Ver.0.11.7.2.OK)
 		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret = 1;
 		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret = 1;
@@ -165,7 +166,8 @@ int NewTL_EntrySignal(int magic) export
 		// (0.11.7.1.OK) && stoPos<0
 	)
 	{
-		if( EntryCCI01>0 && EntryCCI<=0) ret=-1;
+		if( TrendCCI<=0 && EntryCCI01>=0 && EntryCCI<=0 ) ret=-1;
+		// (0.11.8.1.OK) if( EntryCCI01>0 && EntryCCI<=0 ) ret=-1;
 		/* (Ver.0.11.7.1.OK)
 		if( rsiPos<=0 && stoCheck<0
 			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret=-1;
@@ -257,26 +259,34 @@ int NewTL_ExitSignal(double NewTL00, int magic) export
 	int ret_exit = 0;
 
 	//*--- Buy ---//
-	if( tLots==1 && Ask>= HLMid01
+	if( tLots==1
+	// (0.11.8.1.OK) if( tLots==1 && Ask>= HLMid01
 		// (0.11.7.2.OK) && mdCheck==1
 		// (0.11.7.1.OK) && rsiPos==50
 		// (0.11.7.1.OK) && stoPos>0
 	)
 	{
-		if( EntryCCI>=0 && TrendCCI>=0 && cTimeBar>=0 ) ret_exit=-1;
+		ret_exit=-1;
+		// if( TrendCCI>=0 && EntryCCI>=0 ) ret_exit=-1;
+		// if( EntryCCI>=0 ) ret_exit=-1;
+		// (0.11.8.1.OK) if( EntryCCI>=0 && TrendCCI>=0 && cTimeBar>0 ) ret_exit=-1;
 		/* (Ver.0.11.7.2.OK)
 		if( rsiPos>=50 && stoCheck>0 && stoPos>0 && stoPos<=3 ) ret_exit = -1;
 		if( stoCheck>0 && stoPos>0 && stoPos<=3 && rsiPos>=50 ) ret_exit = -1;
 		*/
 	}
 	//*--- Sell ---//
-	if( tLots==-1 && Bid<= HLMid01
+	if( tLots==-1
+	// if( tLots==-1 && Bid<= HLMid01
 		// (0.11.7.2.OK) & mdCheck==-1
 		// (0.11.7.1.OK) && rsiPos==-50
 		// (0.11.7.1.OK) && stoPos<0
 	)
 	{
-		if( EntryCCI<=0 && TrendCCI<=0 && cTimeBar<=0 ) ret_exit=1;
+		ret_exit=1;
+		// if( TrendCCI<=0 && EntryCCI<=0 ) ret_exit=1;
+		// if( EntryCCI<=0 ) ret_exit=1;
+		// (0.11.8.1.OK) if( EntryCCI<=0 && TrendCCI<=0 && cTimeBar<0 ) ret_exit=1;
 		/* (Ver.0.11.7.2.OK)
 		if( rsiPos<=0 && stoCheck<0
 			&& stoPos<0 && stoPos!=-2 && stoPos!=-3 ) ret_exit = 1;
